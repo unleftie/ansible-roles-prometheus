@@ -1,0 +1,34 @@
+service:
+  blackbox_exporter.service:
+    enabled: true
+    running: true
+user:
+  {{ blackbox_system_user }}:
+    exists: true
+    groups:
+      - {{ blackbox_system_group }}
+    shell: /usr/sbin/nologin
+group:
+  {{ blackbox_system_group }}:
+    exists: true
+http:
+  http://{{ blackbox_exporter_web_listen_address }}{{ blackbox_exporter_web_external_url }}/:
+    status: 200
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body: [<head><title>Blackbox Exporter</title></head>]
+process:
+  blackbox_export:
+    running: true
+command:
+  blackbox_exporter --config.check --config.file="{{ blackbox_config_path }}":
+    exit-status: 0
+    stderr: [Config file is ok exiting]
+file:
+  {{ blackbox_config_path }}:
+    exists: true
+    mode: "0640"
+    owner: {{ blackbox_system_user }}
+    group: {{ blackbox_system_group }}
+    filetype: file

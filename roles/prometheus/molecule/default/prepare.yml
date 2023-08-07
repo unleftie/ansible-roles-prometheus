@@ -1,0 +1,23 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure apt cache are updated
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+      register: _progress_status
+      until: _progress_status is succeeded
+      delay: 5
+      retries: 5
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure unnecessary dependencies are removed
+      package:
+        name: curl-minimal
+        state: absent
+      register: _progress_status
+      until: _progress_status is succeeded
+      delay: 5
+      retries: 5

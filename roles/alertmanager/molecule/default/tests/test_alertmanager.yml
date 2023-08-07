@@ -1,0 +1,34 @@
+service:
+  alertmanager.service:
+    enabled: true
+    running: true
+user:
+  {{ alertmanager_system_user }}:
+    exists: true
+    groups:
+      - {{ alertmanager_system_group }}
+    shell: /usr/sbin/nologin
+group:
+  {{ alertmanager_system_group }}:
+    exists: true
+http:
+  http://{{ alertmanager_web_listen_address }}:
+    status: 200
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body: [<title>Alertmanager</title>]
+process:
+  alertmanager:
+    running: true
+command:
+  amtool check-config {{ alertmanager_config_dir }}/alertmanager.yml:
+    exit-status: 0
+    stdout: [SUCCESS]
+file:
+  {{ alertmanager_config_dir }}/alertmanager.yml:
+    exists: true
+    mode: "0640"
+    owner: {{ alertmanager_system_user }}
+    group: {{ alertmanager_system_group }}
+    filetype: file

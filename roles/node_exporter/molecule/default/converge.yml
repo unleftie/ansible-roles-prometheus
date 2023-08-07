@@ -1,8 +1,7 @@
 ---
 - name: Converge
   hosts: all
-  any_errors_fatal: true
-  roles:
-    - prometheus.prometheus.node_exporter
-  vars:
-    node_exporter_web_listen_address: "127.0.0.1:9100"
+  become: true
+  tasks:
+    - include_role:
+        name: "{{ lookup('env', 'ROLE_NAME') | default('node_exporter', true) }}"

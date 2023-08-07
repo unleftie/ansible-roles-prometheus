@@ -1,0 +1,27 @@
+service:
+  node_exporter.service:
+    enabled: true
+    running: true
+user:
+  {{ node_exporter_system_user }}:
+    exists: true
+    groups:
+      - {{ node_exporter_system_group }}
+    shell: /usr/sbin/nologin
+group:
+  {{ node_exporter_system_group }}:
+    exists: true
+http:
+  http://{{ node_exporter_web_listen_address }}{{ node_exporter_web_telemetry_path }}:
+    status: 200
+    allow-insecure: false
+    no-follow-redirects: false
+    timeout: 5000
+    body: ['node_scrape_collector_success{collector="cpu"} 1']
+process:
+  node_exporter:
+    running: true
+command:
+  node_exporter --version:
+    exit-status: 0
+    stdout: [node_exporter]

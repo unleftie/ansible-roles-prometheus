@@ -1,14 +1,15 @@
 ---
-blackbox_exporter_version: 0.24.0
-blackbox_exporter_binary_url: "https://github.com/{{ _blackbox_exporter_repo }}/releases/download/v{{ blackbox_exporter_version }}/\
-                               blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ go_arch_map[ansible_architecture] |
-                               default(ansible_architecture) }}.tar.gz"
+blackbox_exporter_version: "latest"
+blackbox_exporter_binary_url:
+  "https://github.com/{{ _blackbox_exporter_repo }}/releases/download/v{{ blackbox_exporter_version }}/\
+  blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ go_arch_map[ansible_architecture] |
+  default(ansible_architecture) }}.tar.gz"
 blackbox_exporter_skip_install: false
 
 blackbox_exporter_web_listen_address: "0.0.0.0:9115"
 
-blackbox_exporter_user: blackbox-exp
-blackbox_exporter_group: "{{ blackbox_exporter_user }}"
+blackbox_exporter_user: "monitoring"
+blackbox_exporter_group: "blackbox-exporter"
 
 blackbox_exporter_cli_flags: {}
 # blackbox_exporter_cli_flags:

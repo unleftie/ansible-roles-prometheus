@@ -3,16 +3,16 @@ service:
     enabled: true
     running: true
 user:
-  {{ blackbox_system_user }}:
+  {{ blackbox_exporter_user }}:
     exists: true
     groups:
-      - {{ blackbox_system_group }}
+      - {{ blackbox_exporter_group }}
     shell: /usr/sbin/nologin
 group:
-  {{ blackbox_system_group }}:
+  {{ blackbox_exporter_group }}:
     exists: true
 http:
-  http://{{ blackbox_exporter_web_listen_address }}{{ blackbox_exporter_web_external_url }}/:
+  http://{{ blackbox_exporter_web_listen_address }}:
     status: 200
     allow-insecure: false
     no-follow-redirects: false
@@ -22,13 +22,13 @@ process:
   blackbox_export:
     running: true
 command:
-  blackbox_exporter --config.check --config.file="{{ blackbox_config_path }}":
+  blackbox_exporter --config.check --config.file="{{ blackbox_exporter_config_dir }}/blackbox_exporter.yml":
     exit-status: 0
     stderr: [Config file is ok exiting]
 file:
-  {{ blackbox_config_path }}:
+  {{ blackbox_exporter_config_dir }}/blackbox_exporter.yml:
     exists: true
     mode: "0640"
-    owner: {{ blackbox_system_user }}
-    group: {{ blackbox_system_group }}
+    owner: {{ blackbox_exporter_user }}
+    group: {{ blackbox_exporter_group }}
     filetype: file

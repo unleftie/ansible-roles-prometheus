@@ -50,10 +50,10 @@
         __blackbox_exporter_checksums: "{{ lookup('url', 'https://github.com/prometheus/blackbox_exporter/releases/download/v' + blackbox_exporter_version + '/sha256sums.txt', wantlist=True) | list }}"
       run_once: true
 
-    - name: "Get checksum for architecture: {{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+    - name: "Get checksum for architecture: {{ go_arch }}"
       set_fact:
         __blackbox_exporter_checksum: "{{ item.split(' ')[0] }}"
       with_items: "{{ __blackbox_exporter_checksums }}"
       when:
-        - "('linux-' + '{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}' + '.tar.gz') in item"
+        - "('linux-' + 'go_arch' + '.tar.gz') in item"
   delegate_to: localhost

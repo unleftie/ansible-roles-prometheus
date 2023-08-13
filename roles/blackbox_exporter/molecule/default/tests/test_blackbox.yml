@@ -25,6 +25,9 @@ command:
   blackbox_exporter --config.check --config.file="{{ blackbox_exporter_config_dir }}/blackbox_exporter.yml":
     exit-status: 0
     stderr: [Config file is ok exiting]
+  getcap -r /usr/local/bin/blackbox_exporter:
+    exit-status: 0
+    stdout: [cap_net_raw=ep]
 file:
   {{ blackbox_exporter_config_dir }}/blackbox_exporter.yml:
     exists: true

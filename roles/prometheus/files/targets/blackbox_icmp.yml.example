@@ -1,0 +1,5 @@
+- targets:
+    - 1.1.1.1
+  labels:
+    service: cloudflare
+    env: prod

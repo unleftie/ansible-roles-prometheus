@@ -1,0 +1,48 @@
+groups:
+  - name: windows_exporter
+    rules:
+      - alert: WindowsInstanceHighCpuLoad
+        expr: '100 - (avg by (instance) (rate(windows_cpu_time_total{mode="idle"}[10m])) * 100) > 90'
+        labels:
+          severity: error
+        annotations:
+          summary: "Windows Instance high CPU load (> 90%)"
+
+      - alert: WindowsInstanceHighRamUsage
+        expr: "100 - ((windows_os_physical_memory_free_bytes / windows_cs_physical_memory_bytes) * 100) > 80"
+        for: 5m
+        labels:
+          severity: warn
+        annotations:
+          summary: "Windows Instance high RAM usage (> 80%)"
+
+      - alert: WindowsInstanceCriticalRamUsage
+        expr: "100 - ((windows_os_physical_memory_free_bytes / windows_cs_physical_memory_bytes) * 100) > 90"
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: "Windows Instance high RAM usage (> 90%)"
+
+      - alert: WindowsInstanceFilesystemSpaceFillingUp
+        expr: "100.0 - 100 * ((windows_logical_disk_free_bytes / 1024 / 1024 ) / (windows_logical_disk_size_bytes / 1024 / 1024)) > 80"
+        for: 2m
+        labels:
+          severity: warn
+        annotations:
+          summary: "Windows Instance out of disk space (< 20% left on disk {{ $labels.volume }})"
+
+      - alert: WindowsInstanceFilesystemOutOfSpace
+        expr: "100.0 - 100 * ((windows_logical_disk_free_bytes / 1024 / 1024 ) / (windows_logical_disk_size_bytes / 1024 / 1024)) > 90"
+        for: 2m
+        labels:
+          severity: error
+        annotations:
+          summary: "Windows Instance out of disk space (< 10% left on disk {{ $labels.volume }})"
+
+      - alert: WindowsInstanceExporterError
+        expr: "windows_exporter_collector_success == 0"
+        labels:
+          severity: warn
+        annotations:
+          summary: "Windows Instance exporter error"

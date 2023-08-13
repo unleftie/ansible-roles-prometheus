@@ -1,0 +1,11 @@
+groups:
+  - name: blackbox_icmp_wireguard
+    rules:
+      - alert: WireguardUp
+        expr: "probe_success{job='blackbox_icmp_wireguard'} == 1"
+        for: 2m
+        labels:
+          severity: error
+        annotations:
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been up for more than 2 minutes."
+          summary: "Wireguard {{ $labels.instance }} up"

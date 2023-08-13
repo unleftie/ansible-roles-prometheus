@@ -59,7 +59,7 @@
   when: prometheus_targets != {}
 
 - name: Copy prometheus custom static targets
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ item }}"
     dest: "{{ prometheus_config_dir }}/file_sd/"
     force: true

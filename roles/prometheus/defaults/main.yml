@@ -176,11 +176,11 @@ prometheus_scrape_configs:
 prometheus_config_file: "prometheus.yml.j2"
 
 prometheus_alert_rules_files:
-  - prometheus/rules/*.rules
+  - files/rules/*.rules
 
 prometheus_static_targets_files:
-  - prometheus/targets/*.yml
-  - prometheus/targets/*.json
+  - files/targets/*.yml
+  - files/targets/*.json
 
 prometheus_alert_rules: []
 

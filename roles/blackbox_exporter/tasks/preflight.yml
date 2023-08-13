@@ -12,9 +12,9 @@
   when: (_pkg_fact_req)
   vars:
     _pkg_fact_req: "{% if (ansible_pkg_mgr == 'apt') %}\
-                    {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
-                    {% else %}\
-                    {% endif %}"
+      {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
+      {% else %}\
+      {% endif %}"
 
 - name: Gather package facts
   ansible.builtin.package_facts:
@@ -24,3 +24,36 @@
   ansible.builtin.assert:
     that:
       - "':' in blackbox_exporter_web_listen_address"
+
+- block:
+    - name: Get latest release
+      uri:
+        url: "https://api.github.com/repos/prometheus/blackbox_exporter/releases/latest"
+        method: GET
+        return_content: true
+        status_code: 200
+        body_format: json
+      register: _latest_release
+      until: _latest_release.status == 200
+      delay: 5
+      retries: 5
+
+    - name: "Set blackbox_exporter version to {{ _latest_release.json.tag_name[1:] }}"
+      set_fact:
+        blackbox_exporter_version: "{{ _latest_release.json.tag_name[1:] }}"
+        blackbox_exporter_checksum_url: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/sha256sums.txt"
+  when: blackbox_exporter_version == "latest"
+
+- block:
+    - name: "Get checksum list"
+      set_fact:
+        __blackbox_exporter_checksums: "{{ lookup('url', 'https://github.com/prometheus/blackbox_exporter/releases/download/v' + blackbox_exporter_version + '/sha256sums.txt', wantlist=True) | list }}"
+      run_once: true
+
+    - name: "Get checksum for architecture: {{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}"
+      set_fact:
+        __blackbox_exporter_checksum: "{{ item.split(' ')[0] }}"
+      with_items: "{{ __blackbox_exporter_checksums }}"
+      when:
+        - "('linux-' + '{{ go_arch_map[ansible_architecture] | default(ansible_architecture) }}' + '.tar.gz') in item"
+  delegate_to: localhost

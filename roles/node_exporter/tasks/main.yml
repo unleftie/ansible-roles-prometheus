@@ -19,12 +19,11 @@
       become: true
       tags:
         - node_exporter_install
-  when:
-    ( not __node_exporter_is_installed.stat.exists ) or
+  when: ( not __node_exporter_is_installed.stat.exists ) or
     ( (__node_exporter_current_version_output.stderr_lines | length > 0)
-      and (__node_exporter_current_version_output.stderr_lines[0].split(" ")[2] != node_exporter_version) ) or
+    and (__node_exporter_current_version_output.stderr_lines[0].split(" ")[2] != node_exporter_version) ) or
     ( (__node_exporter_current_version_output.stdout_lines | length > 0)
-      and (__node_exporter_current_version_output.stdout_lines[0].split(" ")[2] != node_exporter_version) ) or
+    and (__node_exporter_current_version_output.stdout_lines[0].split(" ")[2] != node_exporter_version) ) or
     ( node_exporter_binary_local_dir | length > 0 )
   tags:
     - node_exporter_install
@@ -43,6 +42,16 @@
 - name: Configure
   ansible.builtin.include_tasks:
     file: configure.yml
+    apply:
+      become: true
+      tags:
+        - node_exporter_configure
+  tags:
+    - node_exporter_configure
+
+- name: Firewall
+  ansible.builtin.include_tasks:
+    file: firewall.yml
     apply:
       become: true
       tags:

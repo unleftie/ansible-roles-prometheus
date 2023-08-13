@@ -1,27 +1,48 @@
 ---
-blackbox_exporter_version: "latest"
+blackbox_exporter_version: "0.24.0"
 blackbox_exporter_binary_url:
   "https://github.com/{{ _blackbox_exporter_repo }}/releases/download/v{{ blackbox_exporter_version }}/\
   blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ go_arch_map[ansible_architecture] |
   default(ansible_architecture) }}.tar.gz"
 blackbox_exporter_skip_install: false
 
-blackbox_exporter_web_listen_address: "0.0.0.0:9115"
+blackbox_exporter_web_port: 9115
+blackbox_exporter_web_listen_address: "127.0.0.1:{{ blackbox_exporter_web_port }}"
+blackbox_exporter_web_external_url: "/prometheus"
 
-blackbox_exporter_user: "monitoring"
-blackbox_exporter_group: "blackbox-exporter"
+blackbox_exporter_user: "blackbox-exporter"
+blackbox_exporter_group: "monitoring"
 
 blackbox_exporter_cli_flags: {}
 # blackbox_exporter_cli_flags:
 #   log.level: "warn"
 
 blackbox_exporter_configuration_modules:
-  http_2xx:
+  http:
     prober: http
     timeout: 5s
     http:
+      preferred_ip_protocol: "ip4"
+      ip_protocol_fallback: false
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
       method: GET
       valid_status_codes: []
+      fail_if_ssl: false
+      fail_if_not_ssl: false
+      follow_redirects: true
+      tls_config:
+        insecure_skip_verify: true
+  icmp:
+    prober: icmp
+    timeout: 1s
+    icmp:
+      preferred_ip_protocol: ip4
+  ssh:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+        - expect: "^SSH-2.0-"
 #  http_post_2xx:
 #    prober: http
 #    timeout: 5s

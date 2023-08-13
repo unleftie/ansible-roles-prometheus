@@ -16,7 +16,8 @@ ExecStart=/usr/local/bin/blackbox_exporter \
   {% for flag, flag_value in blackbox_exporter_cli_flags.items() -%}
   --{{ flag }}={{ flag_value }} \
   {% endfor -%}
-  --web.listen-address={{ blackbox_exporter_web_listen_address }}
+  --web.listen-address={{ blackbox_exporter_web_listen_address }} \
+  --web.external-url={{ blackbox_exporter_web_external_url }}
 
 SyslogIdentifier=blackbox_exporter
 KillMode=process

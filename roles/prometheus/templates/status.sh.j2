@@ -1,0 +1,9 @@
+#!/usr/bin/zsh
+
+promtool check config {{ prometheus_config_dir }}/prometheus.yml
+
+echo "prometheus:" $(systemctl is-active prometheus)
+echo "blackbox_exporter:" $(systemctl is-active blackbox_exporter)
+echo "alertmanager:" $(systemctl is-active alertmanager)
+echo "node_exporter:" $(systemctl is-active node_exporter)
+echo "grafana-server:" $(systemctl is-active grafana-server)

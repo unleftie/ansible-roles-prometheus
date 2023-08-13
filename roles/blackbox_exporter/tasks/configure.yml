@@ -3,9 +3,9 @@
   ansible.builtin.template:
     src: blackbox_exporter.service.j2
     dest: /etc/systemd/system/blackbox_exporter.service
-    owner: root
-    group: root
-    mode: 0644
+    owner: "{{ blackbox_exporter_user }}"
+    group: "{{ blackbox_exporter_group }}"
+    mode: 0640
   notify:
     - restart blackbox exporter
 
@@ -13,8 +13,8 @@
   ansible.builtin.template:
     src: blackbox_exporter.yml.j2
     dest: "{{ blackbox_exporter_config_dir }}/blackbox_exporter.yml"
-    owner: root
+    owner: "{{ blackbox_exporter_user }}"
     group: "{{ blackbox_exporter_group }}"
-    mode: 0644
+    mode: 0640
   notify:
     - reload blackbox exporter

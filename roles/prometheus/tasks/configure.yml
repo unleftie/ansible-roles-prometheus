@@ -3,8 +3,8 @@
   ansible.builtin.template:
     src: "alert.rules.j2"
     dest: "{{ prometheus_config_dir }}/rules/ansible_managed.rules"
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
     validate: "{{ _prometheus_binary_install_dir }}/promtool check rules %s"
   when:
@@ -16,8 +16,8 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ prometheus_config_dir }}/rules/"
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
     validate: "{{ _prometheus_binary_install_dir }}/promtool check rules %s"
   with_fileglob: "{{ prometheus_alert_rules_files }}"
@@ -29,8 +29,8 @@
     src: "{{ prometheus_config_file }}"
     dest: "{{ prometheus_config_dir }}/prometheus.yml"
     force: true
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
     validate: "{{ _prometheus_binary_install_dir }}/promtool check config %s"
   no_log: "{{ 'false' if lookup('env', 'CI') else 'true' }}"
@@ -42,8 +42,8 @@
     content: "{{ prometheus_web_config | to_nice_yaml(indent=2, sort_keys=False) }}"
     dest: "{{ prometheus_config_dir }}/web.yml"
     force: true
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
 
 - name: Configure prometheus static targets
@@ -52,8 +52,8 @@
       {{ item.value | to_nice_yaml(indent=2, sort_keys=False) }}
     dest: "{{ prometheus_config_dir }}/file_sd/{{ item.key }}.yml"
     force: true
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
   with_dict: "{{ prometheus_targets }}"
   when: prometheus_targets != {}
@@ -63,7 +63,7 @@
     src: "{{ item }}"
     dest: "{{ prometheus_config_dir }}/file_sd/"
     force: true
-    owner: root
-    group: prometheus
+    owner: "{{ prometheus_system_user }}"
+    group: "{{ prometheus_system_group }}"
     mode: 0640
   with_fileglob: "{{ prometheus_static_targets_files }}"

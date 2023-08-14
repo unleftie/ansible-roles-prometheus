@@ -1,24 +1,26 @@
 ---
 - name: Create alertmanager system group
   ansible.builtin.group:
-    name: alertmanager
+    name: "{{ alertmanager_system_group }}"
     system: true
     state: present
+  when: alertmanager_system_group != "root"
 
 - name: Create alertmanager system user
   ansible.builtin.user:
-    name: alertmanager
+    name: "{{ alertmanager_system_user }}"
     system: true
     shell: "/usr/sbin/nologin"
-    group: alertmanager
+    group: "{{ alertmanager_system_group }}"
     createhome: false
+  when: alertmanager_system_user != "root"
 
 - name: Create alertmanager directories
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    owner: alertmanager
-    group: alertmanager
+    owner: "{{ alertmanager_system_user }}"
+    group: "{{ alertmanager_system_group }}"
     mode: 0755
   with_items:
     - "{{ alertmanager_config_dir }}"
@@ -31,7 +33,6 @@
     - alertmanager_binary_local_dir | length == 0
     - not alertmanager_skip_install
   block:
-
     - name: Download alertmanager binary to local folder
       become: false
       ansible.builtin.get_url:

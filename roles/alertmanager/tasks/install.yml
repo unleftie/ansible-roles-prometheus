@@ -39,7 +39,7 @@
         url: "{{ alertmanager_binary_url }}"
         dest: "/tmp/alertmanager-{{ alertmanager_version }}.linux-{{ go_arch }}.tar.gz"
         checksum: "sha256:{{ __alertmanager_checksum }}"
-        mode: 0644
+        mode: 0640
       register: _download_archive
       until: _download_archive is succeeded
       retries: 5

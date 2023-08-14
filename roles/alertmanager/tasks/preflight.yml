@@ -16,9 +16,9 @@
   when: (_pkg_fact_req)
   vars:
     _pkg_fact_req: "{% if (ansible_pkg_mgr == 'apt') %}\
-                    {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
-                    {% else %}\
-                    {% endif %}"
+      {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
+      {% else %}\
+      {% endif %}"
 
 - name: Gather package facts
   ansible.builtin.package_facts:
@@ -26,8 +26,9 @@
 
 - name: Discover latest version
   ansible.builtin.set_fact:
-    alertmanager_version: "{{ (lookup('url', 'https://api.github.com/repos/prometheus/alertmanager/releases/latest', headers=_github_api_headers,
-                           split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
+    alertmanager_version:
+      "{{ (lookup('url', 'https://api.github.com/repos/prometheus/alertmanager/releases/latest', headers=_github_api_headers,
+      split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
   run_once: true
   until: alertmanager_version is version('0.0.0', '>=')
   retries: 10
@@ -55,12 +56,10 @@
       when:
         - "('linux-' + go_arch + '.tar.gz') in item"
 
-
 - name: Fail when extra config flags are duplicating ansible variables
   ansible.builtin.fail:
     msg: "Detected duplicate configuration entry. Please check your ansible variables and role README.md."
-  when:
-    (alertmanager_config_flags_extra['config.file'] is defined) or
+  when: (alertmanager_config_flags_extra['config.file'] is defined) or
     (alertmanager_config_flags_extra['storage.path'] is defined) or
     (alertmanager_config_flags_extra['web.listen-address'] is defined) or
     (alertmanager_config_flags_extra['web.external-url'] is defined)
@@ -135,6 +134,7 @@
 
 - name: "`alertmanager_child_routes` is no longer supported"
   ansible.builtin.fail:
-    msg: "Please move content of `alertmanager_child_routes` to `alertmanager_route.routes` as the former variable is deprecated
-          and will be removed in future versions."
+    msg:
+      "Please move content of `alertmanager_child_routes` to `alertmanager_route.routes` as the former variable is deprecated
+      and will be removed in future versions."
   when: alertmanager_child_routes is defined

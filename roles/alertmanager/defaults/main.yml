@@ -16,10 +16,12 @@ alertmanager_db_dir: /var/lib/alertmanager
 alertmanager_config_file: "alertmanager.yml.j2"
 
 alertmanager_template_files:
-  - alertmanager/templates/*.tmpl
+  - templates/*.tmpl
 
-alertmanager_web_listen_address: "0.0.0.0:9093"
-alertmanager_web_external_url: "http://localhost:9093/"
+alertmanager_web_port: "9093"
+alertmanager_web_listen_address: "127.0.0.1:{{ alertmanager_web_port }}"
+alertmanager_web_external_path: "/"
+alertmanager_web_external_url: "http://{{ alertmanager_web_listen_address }}{{ alertmanager_web_external_path }}"
 
 alertmanager_http_config: {}
 
@@ -64,6 +66,24 @@ alertmanager_cluster:
 
 alertmanager_receivers:
   - name: blackhole
+  - name: telegram_default
+    telegram_configs:
+      - send_resolved: true
+        http_config:
+          follow_redirects: true
+        bot_token: "{{ vault_alertmanager_telegram_bot_token }}"
+        chat_id: "{{ vault_alertmanager_telegram_chat_id }}"
+        message: '{% raw %}{{ template "telegram.default" .}}{% endraw %}'
+        parse_mode: HTML
+  - name: telegram_home
+    telegram_configs:
+      - send_resolved: true
+        http_config:
+          follow_redirects: true
+        bot_token: "{{ vault_alertmanager_telegram_bot_token }}"
+        chat_id: "{{ vault_alertmanager_telegram_home_chat_id }}"
+        message: '{% raw %}{{ template "telegram_home.default" .}}{% endraw %}'
+        parse_mode: HTML
 
 alertmanager_inhibit_rules: []
 # alertmanager_inhibit_rules:
@@ -85,6 +105,26 @@ alertmanager_route:
   group_interval: 15s
   group_wait: 15s
   repeat_interval: 24h
+  routes:
+    - receiver: telegram_home
+      match:
+        env: telegram_home
+      group_by:
+        - job
+        - alertname
+      group_interval: 15s
+      group_wait: 15s
+      repeat_interval: 24h
+    - receiver: telegram_default
+      match:
+        env: prod
+        severity: error
+      group_by:
+        - job
+        - alertname
+      group_interval: 15s
+      group_wait: 15s
+      repeat_interval: 24h
 
 # The template for amtool's configuration
 alertmanager_amtool_config_file: "amtool.yml.j2"

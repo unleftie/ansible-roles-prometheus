@@ -1,0 +1,9 @@
+{{ define "telegram.default" }}
+{{ range .Alerts }}
+{{ if eq .Status "firing" }}🚨 {{ .Status | toUpper }} 🚨 {{ else }}✅ {{ .Status | toUpper }} ✅ {{ end }}
+ALERTNAME: {{ .Labels.alertname }}
+SUMMARY: {{ .Annotations.summary }}
+SERVICE: {{ .Labels.service }}
+{{ if eq .Status "firing" }}STARTS AT: {{ .StartsAt.Local }} {{ else }}ENDS AT: {{ .EndsAt.Local }} {{ end }}
+{{ end }}
+{{ end }}

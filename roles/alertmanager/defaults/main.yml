@@ -7,7 +7,7 @@ alertmanager_binary_url:
 alertmanager_checksums_url: "https://github.com/{{ _alertmanager_repo }}/releases/download/v{{ alertmanager_version }}/sha256sums.txt"
 alertmanager_skip_install: false
 
-alertmanager_system_group: "monitoring"
+alertmanager_system_group: "prometheus"
 alertmanager_system_user: "alertmanager"
 
 alertmanager_config_dir: /etc/alertmanager

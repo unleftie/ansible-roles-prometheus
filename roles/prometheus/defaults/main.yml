@@ -184,5 +184,5 @@ prometheus_static_targets_files:
 
 prometheus_alert_rules: []
 
-prometheus_system_group: "monitoring"
+prometheus_system_group: "prometheus"
 prometheus_system_user: "prometheus"

@@ -39,7 +39,7 @@ jobs:
 
       - name: Get roles list
         id: roles-list
-        run: echo "roles-list=$(ls roles/ | xargs)" >> $GITHUB_OUTPUT
+        run: echo "roles-list=$(ls roles/ | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Print list
@@ -90,9 +90,9 @@ jobs:
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 5
   #   if: |
-  #     inputs.runLint == true || 
-  #     github.event_name == 'push' || 
-  #     github.event_name == 'pull_request' || 
+  #     inputs.runLint == true ||
+  #     github.event_name == 'push' ||
+  #     github.event_name == 'pull_request' ||
   #     github.event_name == 'schedule'
   #   steps:
   #     - name: Checkout
@@ -114,9 +114,9 @@ jobs:
   #   runs-on: ubuntu-latest
   #   timeout-minutes: 10
   #   if: |
-  #     inputs.runMolecule == true || 
-  #     github.event_name == 'push' || 
-  #     github.event_name == 'pull_request' || 
+  #     inputs.runMolecule == true ||
+  #     github.event_name == 'push' ||
+  #     github.event_name == 'pull_request' ||
   #     github.event_name == 'schedule'
   #   strategy:
   #     matrix:

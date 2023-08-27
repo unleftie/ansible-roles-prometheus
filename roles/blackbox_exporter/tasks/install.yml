@@ -15,7 +15,7 @@
     createhome: false
   when: blackbox_exporter_user != 'root'
 
-- name: Discover latest version
+- name: Get binary
   when:
     - blackbox_exporter_binary_local_dir | length == 0
     - not blackbox_exporter_skip_install
@@ -50,20 +50,20 @@
         mode: 0755
         owner: root
         group: root
-      notify: restart blackbox exporter
+      notify: restart blackbox_exporter
       when: not ansible_check_mode
 
 - name: Propagate locally distributed blackbox_exporter binary
   ansible.builtin.copy:
     src: "{{ blackbox_exporter_binary_local_dir }}/blackbox_exporter"
     dest: "{{ blackbox_exporter_binary_install_dir }}/blackbox_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:
     - blackbox_exporter_binary_local_dir | length > 0
     - not blackbox_exporter_skip_install
-  notify: restart blackbox exporter
+  notify: restart blackbox_exporter
 
 - name: Install libcap on Debian systems
   ansible.builtin.package:

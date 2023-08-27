@@ -39,12 +39,11 @@ jobs:
 
       - name: Get roles list
         id: roles-list
-        run: echo "roles-list=$(ls roles/)" >> $GITHUB_OUTPUT
+        run: echo "ROLES=$(ls roles/) roles-list=${ROLES}" >> $GITHUB_OUTPUT
         shell: bash
 
-      - name: Print Environment
-        id: print-environment
-        run: echo "Working environment is '${{ steps.roles-list.outputs.roles-list }}'"
+      - name: Print list
+        run: echo "list is '${{ steps.roles-list.outputs.roles-list }}'"
         shell: bash
 
     outputs:

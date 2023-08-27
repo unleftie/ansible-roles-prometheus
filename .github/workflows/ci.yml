@@ -39,7 +39,7 @@ jobs:
 
       - name: Get roles list
         id: roles-list
-        run: echo "::set-output roles-list=$(ls roles/)"
+        run: echo "roles-list=$(ls roles/)" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Print Environment

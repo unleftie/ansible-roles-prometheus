@@ -123,11 +123,11 @@ jobs:
       github.event_name == 'pull_request' ||
       github.event_name == 'schedule'
     strategy:
+      fail-fast: false
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
         distro:
           - debian12
-          - ubuntu2204
 
     steps:
       - name: Checkout

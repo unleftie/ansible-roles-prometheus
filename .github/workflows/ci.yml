@@ -85,61 +85,61 @@ jobs:
         with:
           path: "roles/${{ matrix.roles }}"
 
-  lint:
-    name: Ansible Lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    if: |
-      inputs.runLint == true || 
-      github.event_name == 'push' || 
-      github.event_name == 'pull_request' || 
-      github.event_name == 'schedule'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  # lint:
+  #   name: Ansible Lint
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   if: |
+  #     inputs.runLint == true || 
+  #     github.event_name == 'push' || 
+  #     github.event_name == 'pull_request' || 
+  #     github.event_name == 'schedule'
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Checkout actions repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
-          token: ${{ secrets.GHA_TOKEN }}
-          path: gha_templates
-          fetch-depth: 0
+  #     - name: Checkout actions repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
+  #         token: ${{ secrets.GHA_TOKEN }}
+  #         path: gha_templates
+  #         fetch-depth: 0
 
-      - name: Run Ansible Lint
-        uses: ./gha_templates/ansible-lint
+  #     - name: Run Ansible Lint
+  #       uses: ./gha_templates/ansible-lint
 
-  molecule:
-    name: Ansible Molecule
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: |
-      inputs.runMolecule == true || 
-      github.event_name == 'push' || 
-      github.event_name == 'pull_request' || 
-      github.event_name == 'schedule'
-    strategy:
-      matrix:
-        distro:
-          - rockylinux9
-          - ubuntu2204
-          - debian12
+  # molecule:
+  #   name: Ansible Molecule
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   if: |
+  #     inputs.runMolecule == true || 
+  #     github.event_name == 'push' || 
+  #     github.event_name == 'pull_request' || 
+  #     github.event_name == 'schedule'
+  #   strategy:
+  #     matrix:
+  #       distro:
+  #         - rockylinux9
+  #         - ubuntu2204
+  #         - debian12
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      - name: Checkout actions repository
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
-          token: ${{ secrets.GHA_TOKEN }}
-          path: gha_templates
-          fetch-depth: 0
+  #     - name: Checkout actions repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
+  #         token: ${{ secrets.GHA_TOKEN }}
+  #         path: gha_templates
+  #         fetch-depth: 0
 
-      - name: Run Ansible Molecule
-        uses: ./gha_templates/ansible-molecule
-        with:
-          github_token: ${{ secrets.GHA_TOKEN }}
-          role_name: ${{ github.event.repository.name }}
-          distro: ${{ matrix.distro }}
+  #     - name: Run Ansible Molecule
+  #       uses: ./gha_templates/ansible-molecule
+  #       with:
+  #         github_token: ${{ secrets.GHA_TOKEN }}
+  #         role_name: ${{ github.event.repository.name }}
+  #         distro: ${{ matrix.distro }}

@@ -39,7 +39,7 @@ jobs:
 
       - name: Get roles list
         id: roles-list
-        run: echo "ROLES=$(ls roles/) roles-list=${ROLES}" >> $GITHUB_OUTPUT
+        run: echo "ROLES=$(ls roles/ | xargs) roles-list=${ROLES}" >> $GITHUB_OUTPUT
         shell: bash
 
       - name: Print list

@@ -25,6 +25,7 @@ on:
 
 env:
   ACTIONS_REPOSITORY: "gha-templates"
+  ROLES_PATH: "roles/"
 
 jobs:
   init:
@@ -37,13 +38,9 @@ jobs:
         with:
           token: ${{ secrets.GHA_TOKEN }}
 
-      - name: Get roles list
+      - name: Get roles list in json
         id: roles-list
-        run: echo "roles-list=$(ls roles/ | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
-        shell: bash
-
-      - name: Print list
-        run: echo "list is '${{ steps.roles-list.outputs.roles-list }}'"
+        run: echo "roles-list=$(ls ${{ env.ROLES_PATH }} | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
         shell: bash
 
     outputs:

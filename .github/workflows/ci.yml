@@ -127,6 +127,7 @@ jobs:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
         distro:
           - debian12
+          - debian11
 
     steps:
       - name: Checkout
@@ -144,6 +145,6 @@ jobs:
         uses: ./gha_templates/ansible-molecule
         with:
           github_token: ${{ secrets.GHA_TOKEN }}
-          role_name: ${{ github.event.repository.name }}
+          role_name: ${{ matrix.roles }}
           distro: ${{ matrix.distro }}
           working_directory: "roles/${{ matrix.roles }}"

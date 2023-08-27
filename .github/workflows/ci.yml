@@ -39,32 +39,17 @@ jobs:
 
       - name: Get roles list
         id: roles-list
-        run: echo "roles-list=$(ls roles/)" >> $GITHUB_OUTPUT
+        run: echo "::set-output roles-list=$(ls roles/)"
         shell: bash
 
     outputs:
       roles-list: ${{ steps.roles-list.outputs.roles-list }}
 
-  list-files:
-    name: Initialize CI for ${{ github.ref_name }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - name: List Files
-        id: list-files
-        uses: mirko-felice/list-files-action@v3.0.5
-        with:
-          repo: ${{ github.repository }}
-          ref: ${{ github.ref_name }}
-          path: "roles/"
-          ext: ""
-    outputs:
-      roles-list: ${{ steps.list-files.outputs.paths }}
-
   scan:
     name: Checkmarx KICS
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [init]
     if: |
       inputs.runKics == true || 
       github.event_name == 'push' || 
@@ -78,7 +63,7 @@ jobs:
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     strategy:
       matrix:
-        roles: ${{ fromJson(needs.list-files.outputs.roles-list) }}
+        roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3

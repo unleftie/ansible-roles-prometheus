@@ -42,6 +42,11 @@ jobs:
         run: echo "::set-output roles-list=$(ls roles/)"
         shell: bash
 
+      - name: Print Environment
+        id: print-environment
+        run: echo "Working environment is '${{ steps.roles-list.outputs.roles-list }}'"
+        shell: bash
+
     outputs:
       roles-list: ${{ steps.roles-list.outputs.roles-list }}
 

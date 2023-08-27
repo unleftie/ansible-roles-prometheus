@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  tasks:
+    - include_role:
+        name: "{{ lookup('env', 'ROLE_NAME') | default('alertmanager', true) }}"
+      vars:
+        vault_alertmanager_telegram_bot_token: 1111111111
+        vault_alertmanager_telegram_chat_id: -1111111111
+        vault_alertmanager_telegram_home_chat_id: -1111111111

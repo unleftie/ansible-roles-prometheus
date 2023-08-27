@@ -127,7 +127,7 @@ jobs:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
         distro:
           - debian12
-          - debian11
+          - ubuntu2204
 
     steps:
       - name: Checkout

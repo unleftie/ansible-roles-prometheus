@@ -9,13 +9,8 @@ argument_specs:
       - "Prometheus Community"
     options:
       blackbox_exporter_version:
-<<<<<<< HEAD
         description: "Blackbox exporter package version"
         default: "latest"
-=======
-        description: "Blackbox exporter package version. Also accepts latest as parameter."
-        default: "0.24.0"
->>>>>>> 27110277499a9d362faaf613ea996a6b55112165
       blackbox_exporter_skip_install:
         description: "Blackbox exporter installation tasks gets skipped when set to true."
         type: bool

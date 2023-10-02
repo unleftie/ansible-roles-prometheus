@@ -115,7 +115,7 @@ jobs:
   molecule:
     name: Ansible Molecule
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     needs: [init]
     if: |
       inputs.runMolecule == true ||

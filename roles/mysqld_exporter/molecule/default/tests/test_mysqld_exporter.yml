@@ -1,34 +1,31 @@
 service:
-  prometheus.service:
+  mysqld_exporter.service:
     enabled: true
     running: true
 user:
-  {{ prometheus_system_user }}:
+  {{ mysqld_exporter_system_user }}:
     exists: true
     groups:
-      - {{ prometheus_system_group }}
+      - {{ mysqld_exporter_system_group }}
     shell: /usr/sbin/nologin
 group:
-  {{ prometheus_system_group }}:
+  {{ mysqld_exporter_system_group }}:
     exists: true
 http:
-  http://{{ prometheus_web_listen_address }}{{ prometheus_web_external_url }}/status:
+  http://{{ mysqld_exporter_web_listen_address }}{{ mysqld_exporter_web_telemetry_path }}:
     status: 200
     allow-insecure: false
     no-follow-redirects: false
     timeout: 5000
     body: [Prometheus Time Series Collection and Processing Server]
-process:
-  prometheus:
-    running: true
 command:
-  promtool check config {{ prometheus_config_dir }}/prometheus.yml:
+  mysqld_exporter --version:
     exit-status: 0
     stdout: ["SUCCESS", "is valid prometheus config file syntax"]
 file:
-  {{ prometheus_config_dir }}/prometheus.yml:
+  {{ mysqld_exporter_config_dir }}/{{ mysqld_exporter_config_file }}:
     exists: true
     mode: "0640"
-    owner: {{ prometheus_system_user }}
-    group: {{ prometheus_system_group }}
+    owner: {{ mysqld_exporter_system_user }}
+    group: {{ mysqld_exporter_system_group }}
     filetype: file

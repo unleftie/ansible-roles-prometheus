@@ -4,4 +4,4 @@
   become: true
   tasks:
     - include_role:
-        name: "{{ lookup('env', 'ROLE_NAME') | default('systemd_exporter', true) }}"
+        name: "{{ lookup('env', 'ROLE_NAME') | default('chrony_exporter', true) }}"

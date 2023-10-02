@@ -5,24 +5,24 @@
     dest: /etc/systemd/system/chrony_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart chrony_exporter
 
 - name: Create chrony_exporter config directory
   ansible.builtin.file:
     path: "/etc/chrony_exporter"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ chrony_exporter_system_user }}"
+    group: "{{ chrony_exporter_system_group }}"
     mode: u+rwX,g+rwX,o=rX
 
 - name: Copy the chrony_exporter web config file
   ansible.builtin.template:
     src: web_config.yaml.j2
     dest: /etc/chrony_exporter/web_config.yaml
-    owner: root
-    group: root
-    mode: 0644
+    owner: "{{ chrony_exporter_system_user }}"
+    group: "{{ chrony_exporter_system_group }}"
+    mode: "0640"
   notify: restart chrony_exporter
 
 - name: Allow chrony_exporter port in SELinux on RedHat OS family

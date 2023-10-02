@@ -22,14 +22,13 @@
     - chrony_exporter_binary_local_dir | length == 0
     - not chrony_exporter_skip_install
   block:
-
     - name: Download chrony_exporter binary to local folder
       become: false
       ansible.builtin.get_url:
         url: "{{ chrony_exporter_binary_url }}"
         dest: "/tmp/chrony_exporter-{{ chrony_exporter_version }}.linux-{{ go_arch }}.tar.gz"
         checksum: "sha256:{{ __chrony_exporter_checksum }}"
-        mode: '0644'
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5
@@ -50,9 +49,9 @@
       ansible.builtin.copy:
         src: "/tmp/chrony_exporter-{{ chrony_exporter_version }}.linux-{{ go_arch }}/chrony_exporter"
         dest: "{{ chrony_exporter_binary_install_dir }}/chrony_exporter"
-        mode: 0755
-        owner: root
-        group: root
+        mode: "0750"
+        owner: "{{ chrony_exporter_system_user }}"
+        group: "{{ chrony_exporter_system_group }}"
       notify: restart chrony_exporter
       when: not ansible_check_mode
 
@@ -60,9 +59,9 @@
   ansible.builtin.copy:
     src: "{{ chrony_exporter_binary_local_dir }}/chrony_exporter"
     dest: "{{ chrony_exporter_binary_install_dir }}/chrony_exporter"
-    mode: 0755
-    owner: root
-    group: root
+    mode: "0750"
+    owner: "{{ chrony_exporter_system_user }}"
+    group: "{{ chrony_exporter_system_group }}"
   when:
     - chrony_exporter_binary_local_dir | length > 0
     - not chrony_exporter_skip_install

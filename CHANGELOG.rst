@@ -5,12 +5,29 @@ Prometheus.Prometheus Release Notes
 .. contents:: Topics
 
 
+v0.7.0
+======
+
+Minor Changes
+-------------
+
+- feat(prometheus): Add shutdown timeout variable (https://github.com/prometheus-community/ansible/pull/220)
+- feat(systemd_exporter): Add TLS configuration (https://github.com/prometheus-community/ansible/pull/205)
+- feat(systemd_exporter): Add logging configuration to systemd_exporter (https://github.com/prometheus-community/ansible/pull/210)
+
+Bugfixes
+--------
+
+- fix(systemd_exporter): Fix collector flags for older versions (https://github.com/prometheus-community/ansible/pull/208)
+- fix: blackbox_exporter ansible-lint risky-octal (https://github.com/prometheus-community/ansible/pull/174)
+
 v0.6.1
 ======
 
 Bugfixes
 --------
 
+- fix(systemd_exporter): Fix collector flags for older versions (https://github.com/prometheus-community/ansible/pull/208)
 - fix: blackbox_exporter ansible-lint risky-octal (https://github.com/prometheus-community/ansible/pull/174)
 
 v0.6.0

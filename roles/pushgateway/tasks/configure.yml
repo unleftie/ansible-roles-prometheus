@@ -12,17 +12,17 @@
   ansible.builtin.file:
     path: "/etc/pushgateway"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ pushgateway_system_user }}"
+    group: "{{ pushgateway_system_group }}"
     mode: u+rwX,g+rwX,o=rX
 
 - name: Copy the pushgateway config file
   ansible.builtin.template:
     src: web_config.yml.j2
     dest: /etc/pushgateway/web_config.yml
-    owner: root
-    group: root
-    mode: 0644
+    owner: "{{ pushgateway_system_user }}"
+    group: "{{ pushgateway_system_group }}"
+    mode: 0640
   notify: restart pushgateway
 
 - name: Allow pushgateway port in SELinux on RedHat OS family

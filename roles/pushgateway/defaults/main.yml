@@ -1,8 +1,9 @@
 ---
-pushgateway_version: 1.6.2
+pushgateway_version: "latest"
 pushgateway_binary_local_dir: ""
-pushgateway_binary_url: "https://github.com/{{ _pushgateway_repo }}/releases/download/v{{ pushgateway_version }}/\
-                           pushgateway-{{ pushgateway_version }}.linux-{{ go_arch }}.tar.gz"
+pushgateway_binary_url:
+  "https://github.com/{{ _pushgateway_repo }}/releases/download/v{{ pushgateway_version }}/\
+  pushgateway-{{ pushgateway_version }}.linux-{{ go_arch }}.tar.gz"
 pushgateway_checksums_url: "https://github.com/{{ _pushgateway_repo }}/releases/download/v{{ pushgateway_version }}/sha256sums.txt"
 pushgateway_skip_install: false
 

@@ -17,11 +17,10 @@ http:
     allow-insecure: false
     no-follow-redirects: false
     timeout: 5000
-    body: [Prometheus Time Series Collection and Processing Server]
+    body: [mysql_up]
 command:
   mysqld_exporter --version:
     exit-status: 0
-    stdout: ["SUCCESS", "is valid prometheus config file syntax"]
 file:
   {{ mysqld_exporter_config_dir }}/{{ mysqld_exporter_config_file }}:
     exists: true

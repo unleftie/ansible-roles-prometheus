@@ -1,34 +1,30 @@
 service:
-  chrony_exporter.service:
+  smokeping_prober.service:
     enabled: true
     running: true
 user:
-  {{ chrony_exporter_system_user }}:
+  {{ smokeping_prober_system_user }}:
     exists: true
     groups:
-      - {{ chrony_exporter_system_group }}
+      - {{ smokeping_prober_system_group }}
     shell: /usr/sbin/nologin
 group:
-  {{ chrony_exporter_system_group }}:
+  {{ smokeping_prober_system_group }}:
     exists: true
 http:
-  http://{{ chrony_exporter_web_listen_address }}{{ chrony_exporter_web_telemetry_path }}:
+  http://{{ smokeping_prober_web_listen_address }}{{ smokeping_prober_web_telemetry_path }}:
     status: 200
     allow-insecure: false
     no-follow-redirects: false
     timeout: 5000
-    body: [promhttp_metric_handler_requests_in_flight]
-process:
-  chrony_exporter:
-    running: true
+    body: [smokeping_receive_errors_total]
 command:
-  chrony_exporter --version:
+  smokeping_prober --version:
     exit-status: 0
-    stdout: ["platform", "tags"]
 file:
-  /etc/chrony_exporter/web_config.yaml:
+  {{ smokeping_prober_config_dir }}/{{ smokeping_prober_config_file }}:
     exists: true
     mode: "0640"
-    owner: {{ chrony_exporter_system_user }}
-    group: {{ chrony_exporter_system_group }}
+    owner: {{ smokeping_prober_system_user }}
+    group: {{ smokeping_prober_system_group }}
     filetype: file

@@ -22,14 +22,13 @@
     - smokeping_prober_binary_local_dir | length == 0
     - not smokeping_prober_skip_install
   block:
-
     - name: Download smokeping_prober binary to local folder
       become: false
       ansible.builtin.get_url:
         url: "{{ smokeping_prober_binary_url }}"
         dest: "/tmp/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}.tar.gz"
         checksum: "sha256:{{ __smokeping_prober_checksum }}"
-        mode: '0644'
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

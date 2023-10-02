@@ -12,23 +12,22 @@
   ansible.builtin.file:
     path: "{{ smokeping_prober_config_dir }}"
     state: directory
-    owner: root
-    group: root
+    owner: "{{ smokeping_prober_system_user }}"
+    group: "{{ smokeping_prober_system_group }}"
     mode: u+rwX,g+rwX,o=rX
 
 - name: Copy the smokeping_prober config file
   ansible.builtin.template:
     src: probes.yml.j2
     dest: "{{ smokeping_prober_config_dir }}/{{ smokeping_prober_config_file }}"
-    owner: root
-    group: root
-    mode: 0644
+    owner: "{{ smokeping_prober_system_user }}"
+    group: "{{ smokeping_prober_system_group }}"
+    mode: 0640
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify: restart smokeping_prober
 
 - name: Configure smokeping_prober web config
-  when:
-    ( smokeping_prober_tls_server_config | length > 0 ) or
+  when: ( smokeping_prober_tls_server_config | length > 0 ) or
     ( smokeping_prober_http_server_config | length > 0 ) or
     ( smokeping_prober_basic_auth_users | length > 0 )
   block:
@@ -36,9 +35,9 @@
       ansible.builtin.template:
         src: web_config.yaml.j2
         dest: "{{ smokeping_prober_config_dir }}/web_config.yaml"
-        owner: root
-        group: root
-        mode: 0644
+        owner: "{{ smokeping_prober_system_user }}"
+        group: "{{ smokeping_prober_system_group }}"
+        mode: 0640
       notify: restart smokeping_prober
 
 - name: Allow smokeping_prober port in SELinux on RedHat OS family

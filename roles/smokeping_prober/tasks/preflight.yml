@@ -12,9 +12,9 @@
   when: (_pkg_fact_req)
   vars:
     _pkg_fact_req: "{% if (ansible_pkg_mgr == 'apt') %}\
-                    {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
-                    {% else %}\
-                    {% endif %}"
+      {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
+      {% else %}\
+      {% endif %}"
 
 - name: Gather package facts
   ansible.builtin.package_facts:
@@ -69,8 +69,9 @@
 
 - name: Discover latest version
   ansible.builtin.set_fact:
-    smokeping_prober_version: "{{ (lookup('url', 'https://api.github.com/repos/{{ _smokeping_prober_repo }}/releases/latest', headers=_github_api_headers,
-                              split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
+    smokeping_prober_version:
+      "{{ (lookup('url', 'https://api.github.com/repos/{{ _smokeping_prober_repo }}/releases/latest', headers=_github_api_headers,
+      split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
   run_once: true
   until: smokeping_prober_version is version('0.0.0', '>=')
   retries: 10

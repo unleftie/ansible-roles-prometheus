@@ -189,3 +189,5 @@ prometheus_alert_rules: []
 
 prometheus_system_group: "prometheus"
 prometheus_system_user: "prometheus"
+
+prometheus_stop_timeout: "600s"

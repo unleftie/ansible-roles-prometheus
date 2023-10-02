@@ -1,34 +1,30 @@
 service:
-  chrony_exporter.service:
+  snmp_exporter.service:
     enabled: true
     running: true
 user:
-  {{ chrony_exporter_system_user }}:
+  {{ snmp_exporter_system_user }}:
     exists: true
     groups:
-      - {{ chrony_exporter_system_group }}
+      - {{ snmp_exporter_system_group }}
     shell: /usr/sbin/nologin
 group:
-  {{ chrony_exporter_system_group }}:
+  {{ snmp_exporter_system_group }}:
     exists: true
 http:
-  http://{{ chrony_exporter_web_listen_address }}{{ chrony_exporter_web_telemetry_path }}:
+  http://{{ snmp_exporter_web_listen_address }}/metrics:
     status: 200
     allow-insecure: false
     no-follow-redirects: false
     timeout: 5000
-    body: [promhttp_metric_handler_requests_in_flight]
-process:
-  chrony_exporter:
-    running: true
+    body: [snmp_packets_total]
 command:
-  chrony_exporter --version:
+  snmp_exporter --version:
     exit-status: 0
-    stdout: ["platform", "tags"]
 file:
-  /etc/chrony_exporter/web_config.yaml:
+  /etc/snmp_exporter/snmp.yml:
     exists: true
     mode: "0640"
-    owner: {{ chrony_exporter_system_user }}
-    group: {{ chrony_exporter_system_group }}
+    owner: {{ snmp_exporter_system_user }}
+    group: {{ snmp_exporter_system_group }}
     filetype: file

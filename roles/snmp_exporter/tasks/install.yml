@@ -1,17 +1,34 @@
 ---
+- name: Create the snmp_exporter group
+  ansible.builtin.group:
+    name: "{{ snmp_exporter_system_group }}"
+    state: present
+    system: true
+  when: snmp_exporter_system_group != "root"
+
+- name: Create the snmp_exporter user
+  ansible.builtin.user:
+    name: "{{ snmp_exporter_system_user }}"
+    groups: "{{ snmp_exporter_system_group }}"
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    create_home: false
+    home: /
+  when: snmp_exporter_system_user != "root"
+
 - name: Get binary
   when:
     - snmp_exporter_binary_local_dir | length == 0
     - not snmp_exporter_skip_install
   block:
-
     - name: Download snmp_exporter binary to local folder
       become: false
       ansible.builtin.get_url:
         url: "{{ snmp_exporter_binary_url }}"
         dest: "/tmp/snmp_exporter-{{ snmp_exporter_version }}.linux-{{ go_arch }}.tar.gz"
         checksum: "sha256:{{ __snmp_exporter_checksum }}"
-        mode: '0644'
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

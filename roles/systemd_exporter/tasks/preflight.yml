@@ -12,9 +12,9 @@
   when: (_pkg_fact_req)
   vars:
     _pkg_fact_req: "{% if (ansible_pkg_mgr == 'apt') %}\
-                    {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
-                    {% else %}\
-                    {% endif %}"
+      {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
+      {% else %}\
+      {% endif %}"
 
 - name: Gather package facts
   ansible.builtin.package_facts:
@@ -87,8 +87,9 @@
 
 - name: Discover latest version
   ansible.builtin.set_fact:
-    systemd_exporter_version: "{{ (lookup('url', 'https://api.github.com/repos/prometheus-community/systemd_exporter/releases/latest',
-                               headers=_github_api_headers, split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
+    systemd_exporter_version:
+      "{{ (lookup('url', 'https://api.github.com/repos/prometheus-community/systemd_exporter/releases/latest',
+      headers=_github_api_headers, split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
   run_once: true
   until: systemd_exporter_version is version('0.0.0', '>=')
   retries: 10

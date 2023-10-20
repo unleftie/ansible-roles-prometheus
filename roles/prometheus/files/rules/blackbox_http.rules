@@ -25,3 +25,12 @@ groups:
           severity: error
         annotations:
           summary: "SSL certificate expired"
+
+      - alert: SslCertificateChanged
+        expr: "changes(probe_ssl_last_chain_info[5m]) != 0"
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: "SSL certificate metadata value changed"
+          description: "The metric value 'probe_ssl_last_chain_info' has changed in the 5 minuite."

@@ -27,6 +27,9 @@ env:
   ACTIONS_REPOSITORY: "gha-templates"
   ROLES_PATH: "roles/"
 
+# Declare default permissions as read only.
+permissions: read-all
+
 jobs:
   init:
     name: Initialize CI for ${{ github.ref_name }}
@@ -66,11 +69,17 @@ jobs:
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Checkout actions repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
           token: ${{ secrets.GHA_TOKEN }}
@@ -96,11 +105,17 @@ jobs:
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Checkout actions repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
           token: ${{ secrets.GHA_TOKEN }}
@@ -130,11 +145,17 @@ jobs:
           - debian12
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: audit
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
 
       - name: Checkout actions repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           repository: ${{ github.repository_owner }}/${{ env.ACTIONS_REPOSITORY }}
           token: ${{ secrets.GHA_TOKEN }}

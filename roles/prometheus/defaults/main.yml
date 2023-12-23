@@ -130,35 +130,6 @@ prometheus_scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
-  - job_name: "blackbox_icmp_ripe"
-    metrics_path: /prometheus/probe
-    params:
-      module: [icmp]
-    file_sd_configs:
-      - files:
-          - "{{ prometheus_config_dir }}/file_sd/blackbox_icmp_ripe.yml"
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
-    scrape_interval: 5m
-  - job_name: "blackbox_icmp_wireguard"
-    metrics_path: /prometheus/probe
-    params:
-      module: [icmp]
-    file_sd_configs:
-      - files:
-          - "{{ prometheus_config_dir }}/file_sd/blackbox_icmp_wireguard.yml"
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
 
   # - job_name: "blackbox_ssh"
   #   metrics_path: /prometheus/probe

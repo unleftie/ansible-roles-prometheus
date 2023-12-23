@@ -24,10 +24,26 @@
   ansible.builtin.package_facts:
   when: "not 'packages' in ansible_facts"
 
+- name: Assert that used version supports listen address type
+  ansible.builtin.assert:
+    that:
+      - >-
+        node_exporter_web_listen_address is string
+        or
+        (
+          node_exporter_version is version('1.5.0', '>=') and
+          node_exporter_web_listen_address | type_debug == "list"
+        )
+
 - name: Naive assertion of proper listen address
   ansible.builtin.assert:
     that:
-      - "':' in node_exporter_web_listen_address"
+      - >-
+        [node_exporter_web_listen_address] |
+          flatten |
+          reject('match', '.+:\\d+$') |
+          list |
+          length == 0
 
 - name: Assert collectors are not both disabled and enabled at the same time
   ansible.builtin.assert:
@@ -57,8 +73,8 @@
     - name: Assert that TLS key and cert are present
       ansible.builtin.assert:
         that:
-          - "{{ __node_exporter_cert_file.stat.exists }}"
-          - "{{ __node_exporter_key_file.stat.exists }}"
+          - "__node_exporter_cert_file.stat.exists"
+          - "__node_exporter_key_file.stat.exists"
 
 - name: Check if node_exporter is installed
   ansible.builtin.stat:

@@ -4,7 +4,7 @@ releases:
   0.0.1:
     changes:
       major_changes:
-        - Initial Release
+        - 'Initial Release'
     release_date: '2023-02-17'
   0.0.3:
     release_date: '2023-03-02'
@@ -82,7 +82,7 @@ releases:
       minor_changes:
         - 'feat: Add mysqld_exporter role (https://github.com/prometheus-community/ansible/pull/45)'
       trivial:
-        - fix version bumper job (https://github.com/prometheus-community/ansible/pull/67)
+        - 'fix: version bumper job (https://github.com/prometheus-community/ansible/pull/67)'
         - 'refactor: underscore variable prefix should be reserved... (https://github.com/prometheus-community/ansible/pull/65)'
     release_date: '2023-03-14'
   0.3.1:
@@ -118,7 +118,7 @@ releases:
     changes:
       bugfixes:
         - 'fix: add "become: true" to snmp_exporter handlers (https://github.com/prometheus-community/ansible/pull/99)'
-        - 'fix: node_exporter - Fix Systemd ProtectHome option in service unit (https://github.com/prometheus-community/ansible/pull/94)'
+        - 'fix: node_exporter   - Fix Systemd ProtectHome option in service unit (https://github.com/prometheus-community/ansible/pull/94)'
         - 'fix: pass token to github api for higher ratelimit (https://github.com/prometheus-community/ansible/pull/91)'
         - 'fix: replace eol platforms with current (https://github.com/prometheus-community/ansible/pull/53)'
         - 'fix: tags support for included tasks (https://github.com/prometheus-community/ansible/pull/87)'
@@ -148,7 +148,6 @@ releases:
         - 'fix: mysqld_exporter should actually respect the mysqld_exporter_host variable
           (https://github.com/prometheus-community/ansible/pull/88)'
       trivial:
-        - Fix mysqld_exporter world-readable secrets (https://github.com/prometheus-community/ansible/pull/169)
         - 'Fix: rename collector flags (https://github.com/prometheus-community/ansible/pull/167)'
         - 'patch: New prometheus/mysqld_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/153)'
         - 'patch: New prometheus/node_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/162)'
@@ -177,8 +176,8 @@ releases:
         - 'removed: Drop fedora 36 support as it is EOL (https://github.com/prometheus-community/ansible/pull/200)'
         - 'removed: Drop ubuntu 18.04 support as it is EOL (https://github.com/prometheus-community/ansible/pull/199)'
       trivial:
-        - Fix mysqld_exporter world-readable secrets (https://github.com/prometheus-community/ansible/pull/169)
-        - 'Fix: rename collector flags (https://github.com/prometheus-community/ansible/pull/167)'
+        - 'fix: mysqld_exporter world-readable secrets (https://github.com/prometheus-community/ansible/pull/169)'
+        - 'fix: rename collector flags (https://github.com/prometheus-community/ansible/pull/167)'
         - 'docs(smokeping_prober): Update arguments specs (https://github.com/prometheus-community/ansible/pull/190)'
         - 'docs: Fix node_exporter 404 TLS auth links (https://github.com/prometheus-community/ansible/pull/154)'
         - 'fix ansible-lint: risky-octal & no-same-owner (https://github.com/prometheus-community/ansible/pull/171)'
@@ -199,16 +198,71 @@ releases:
     release_date: '2023-08-26'
   0.7.0:
     changes:
-      minor_changes:
-        - 'feat(systemd_exporter): Add logging configuration to systemd_exporter (https://github.com/prometheus-community/ansible/pull/210)'
-        - 'feat(systemd_exporter): Add TLS configuration (https://github.com/prometheus-community/ansible/pull/205)'
-        - 'feat(prometheus): Add shutdown timeout variable (https://github.com/prometheus-community/ansible/pull/220)'
       bugfixes:
         - 'fix(systemd_exporter): Fix collector flags for older versions (https://github.com/prometheus-community/ansible/pull/208)'
         - 'fix: blackbox_exporter ansible-lint risky-octal (https://github.com/prometheus-community/ansible/pull/174)'
+      minor_changes:
+        - 'feat(prometheus): Add shutdown timeout variable (https://github.com/prometheus-community/ansible/pull/220)'
+        - 'feat(systemd_exporter): Add TLS configuration (https://github.com/prometheus-community/ansible/pull/205)'
+        - 'feat(systemd_exporter): Add logging configuration to systemd_exporter (https://github.com/prometheus-community/ansible/pull/210)'
       trivial:
-        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/211)'
         - 'patch: New prometheus/prometheus upstream release! (https://github.com/prometheus-community/ansible/pull/215)'
-        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/214)'
         - 'patch: New prometheus/pushgateway upstream release! (https://github.com/prometheus-community/ansible/pull/219)'
+        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/211)'
+        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/214)'
     release_date: '2023-08-29'
+  0.7.1:
+    changes:
+      bugfixes:
+        - "fix(molecule): don't contact galaxy api since requirements come from git
+           (https://github.com/prometheus-community/ansible/pull/241)"
+      trivial:
+        - 'docs: fix alertmanager role name (https://github.com/prometheus-community/ansible/pull/240)'
+        - 'docs: fix blackbox_exporter role name (https://github.com/prometheus-community/ansible/pull/239)'
+        - 'patch: New prometheus/prometheus upstream release! (https://github.com/prometheus-community/ansible/pull/232)'
+        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/228)'
+    release_date: '2023-10-27'
+  0.8.0:
+    changes:
+      bugfixes:
+        - "fix(molecule): don't contact galaxy api since requirements come from git
+          (https://github.com/prometheus-community/ansible/pull/241)"
+      minor_changes:
+        - 'feat: add smartctl_exporter role (https://github.com/prometheus-community/ansible/pull/229)'
+      trivial:
+        - 'docs: fix alertmanager role name (https://github.com/prometheus-community/ansible/pull/240)'
+        - 'docs: fix blackbox_exporter role name (https://github.com/prometheus-community/ansible/pull/239)'
+        - 'patch: New prometheus/prometheus upstream release! (https://github.com/prometheus-community/ansible/pull/232)'
+        - 'patch: New prometheus/snmp_exporter upstream release! (https://github.com/prometheus-community/ansible/pull/228)'
+    release_date: '2023-10-27'
+  0.8.1:
+    changes:
+      trivial:
+        - 'patch: New prometheus-community/systemd_exporter upstream release 0.6.0!
+          (https://github.com/prometheus-community/ansible/pull/244)'
+        - 'patch: New prometheus/node_exporter upstream release 1.7.0! (https://github.com/prometheus-community/ansible/pull/247)'
+        - 'patch: New prometheus/prometheus upstream release 2.48.0! (https://github.com/prometheus-community/ansible/pull/246)'
+    release_date: '2023-10-31'
+  0.9.0:
+    changes:
+      bugfixes:
+        - 'fix: Use repo var for preflight (https://github.com/prometheus-community/ansible/pull/258)'
+      minor_changes:
+        - 'enhancement: allows using multiple web listen addresses (https://github.com/prometheus-community/ansible/pull/213)'
+        - 'feat(blackbox_exporter): Create config directory (https://github.com/prometheus-community/ansible/pull/250)'
+        - 'feat: Add memcached_exporter role (https://github.com/prometheus-community/ansible/pull/256)'
+        - 'minor: Add ansible 2.16 support (https://github.com/prometheus-community/ansible/pull/255)'
+    release_date: '2023-11-29'
+  0.9.1:
+    changes:
+      minor_changes:
+        - 'enhancement: Add time_intervals to AlertManager (https://github.com/prometheus-community/ansible/pull/251)'
+      trivial:
+        - 'patch: New prometheus/memcached_exporter upstream release 0.14.1! (https://github.com/prometheus-community/ansible/pull/259)'
+        - 'patch: New prometheus/prometheus upstream release 2.48.1! (https://github.com/prometheus-community/ansible/pull/260)'
+        - 'patch: New prometheus/snmp_exporter upstream release 0.25.0! (https://github.com/prometheus-community/ansible/pull/261)'
+    release_date: '2023-12-10'
+  0.10.0:
+    release_date: '2023-12-12'
+  0.10.1:
+    release_date: '2023-12-12'

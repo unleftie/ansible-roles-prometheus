@@ -5,6 +5,60 @@ Prometheus.Prometheus Release Notes
 .. contents:: Topics
 
 
+v0.10.1
+=======
+
+v0.10.0
+=======
+
+v0.9.1
+======
+
+Minor Changes
+-------------
+
+- enhancement: Add time_intervals to AlertManager (https://github.com/prometheus-community/ansible/pull/251)
+
+v0.9.0
+======
+
+Minor Changes
+-------------
+
+- enhancement: allows using multiple web listen addresses (https://github.com/prometheus-community/ansible/pull/213)
+- feat(blackbox_exporter): Create config directory (https://github.com/prometheus-community/ansible/pull/250)
+- feat: Add memcached_exporter role (https://github.com/prometheus-community/ansible/pull/256)
+- minor: Add ansible 2.16 support (https://github.com/prometheus-community/ansible/pull/255)
+
+Bugfixes
+--------
+
+- fix: Use repo var for preflight (https://github.com/prometheus-community/ansible/pull/258)
+
+v0.8.1
+======
+
+v0.8.0
+======
+
+Minor Changes
+-------------
+
+- feat: add smartctl_exporter role (https://github.com/prometheus-community/ansible/pull/229)
+
+Bugfixes
+--------
+
+- fix(molecule): don't contact galaxy api since requirements come from git (https://github.com/prometheus-community/ansible/pull/241)
+
+v0.7.1
+======
+
+Bugfixes
+--------
+
+- fix(molecule): don't contact galaxy api since requirements come from git (https://github.com/prometheus-community/ansible/pull/241)
+
 v0.7.0
 ======
 

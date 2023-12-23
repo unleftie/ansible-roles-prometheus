@@ -1,0 +1,13 @@
+service:
+  smartctl_exporter.service:
+    enabled: true
+    running: true
+user:
+  {{ smartctl_exporter_system_user }}:
+    exists: true
+    groups:
+      - {{ smartctl_exporter_system_group }}
+    shell: /usr/sbin/nologin
+group:
+  {{ smartctl_exporter_system_group }}:
+    exists: true

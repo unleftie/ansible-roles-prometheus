@@ -1,0 +1,13 @@
+service:
+  memcached_exporter.service:
+    enabled: true
+    running: true
+user:
+  {{ memcached_exporter_system_user }}:
+    exists: true
+    groups:
+      - {{ memcached_exporter_system_group }}
+    shell: /usr/sbin/nologin
+group:
+  {{ memcached_exporter_system_group }}:
+    exists: true

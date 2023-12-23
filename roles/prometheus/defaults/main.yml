@@ -77,7 +77,6 @@ prometheus_scrape_configs:
     static_configs:
       - targets:
           - "{{ prometheus_web_listen_address }}"
-          - "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
   - job_name: "node_exporter"
     metrics_path: /metrics
     file_sd_configs:

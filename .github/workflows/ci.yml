@@ -148,7 +148,7 @@ jobs:
         uses: unleftie/ansible-molecule-action@22635a495dd572eb6cf70791f1af9a75979caf7d # v1.6.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          role_name: ${{ github.event.repository.name }}
+          role_name: ${{ matrix.roles }}
           distro: ${{ matrix.distro }}
           working_directory: "roles/${{ matrix.roles }}"
 

@@ -35,6 +35,8 @@
     - "{{ prometheus_config_dir }}"
     - "{{ prometheus_config_dir }}/rules"
     - "{{ prometheus_config_dir }}/file_sd"
+    - "{{ prometheus_config_dir }}/consoles"
+    - "{{ prometheus_config_dir }}/console_libraries"
 
 - name: Get prometheus binary
   when:

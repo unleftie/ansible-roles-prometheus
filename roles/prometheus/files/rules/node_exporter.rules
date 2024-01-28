@@ -10,7 +10,7 @@ groups:
           summary: "Reboot required"
 
       - alert: InstanceHighCpuUsage
-        expr: '100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[10m])) * 100) > 90'
+        expr: '100 - (avg by (instance, env, service) (rate(node_cpu_seconds_total{mode="idle"}[10m])) * 100) > 90'
         labels:
           severity: error
         annotations:

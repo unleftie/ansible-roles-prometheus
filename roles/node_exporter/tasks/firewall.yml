@@ -5,13 +5,14 @@
 
 - name: Allow monitoring from external
   iptables:
+    ip_version: "{{ item }}"
     chain: INPUT
     protocol: tcp
-    source: "0.0.0.0/0"
     destination_port: "{{ node_exporter_web_listen_port }}"
     state: "{{ 'present' if (node_exporter_configure_firewall | bool) else 'absent' }}"
     ctstate: NEW
     jump: ACCEPT
     comment: "node_exporter from external"
+  with_items: ["ipv4", "ipv6"]
   notify: save_iptables_rules
   when: "'iptables' in ansible_facts.packages"

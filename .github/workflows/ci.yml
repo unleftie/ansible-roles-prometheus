@@ -86,7 +86,7 @@ jobs:
         continue-on-error: true
 
       - name: Upload to code-scanning
-        uses: github/codeql-action/upload-sarif@0b21cf2492b6b02c465a3e5d7c473717ad7721ba # v3.23.1
+        uses: github/codeql-action/upload-sarif@e8893c57a1f3a2b659b6b55564fdfdbbd2982911 # v3.24.0
         with:
           sarif_file: results.sarif
 
@@ -114,7 +114,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Run Ansible Lint
-        uses: unleftie/ansible-lint-action@5e48b42dbdaef17c54c526b52776426f5819a818 # v1.0.3
+        uses: unleftie/ansible-lint-action@f6c9ea06aebdd94a4a7e0414d630fdb6832b1083 # v1.1.0
         with:
           path: "roles/${{ matrix.roles }}"
 
@@ -146,7 +146,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Run Ansible Molecule
-        uses: unleftie/ansible-molecule-action@22635a495dd572eb6cf70791f1af9a75979caf7d # v1.6.3
+        uses: unleftie/ansible-molecule-action@e8cecf7f6dfab2293dd28df032318e6a698c60a3 # v1.7.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           role_name: ${{ matrix.roles }}

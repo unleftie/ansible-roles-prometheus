@@ -1,5 +1,5 @@
 - targets:
-    - https://google.com
+    - https://www.cloudflare.com
   labels:
-    service: google
+    service: cloudflare
     env: prod

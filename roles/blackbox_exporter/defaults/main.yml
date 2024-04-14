@@ -34,6 +34,21 @@ blackbox_exporter_configuration_modules:
       follow_redirects: true
       tls_config:
         insecure_skip_verify: true
+  http_regexp:
+    prober: http
+    timeout: 5s
+    http:
+      preferred_ip_protocol: "ip4"
+      ip_protocol_fallback: false
+      valid_http_versions: ["HTTP/1.1", "HTTP/2.0"]
+      method: GET
+      valid_status_codes: []
+      fail_if_ssl: false
+      fail_if_not_ssl: false
+      follow_redirects: true
+      tls_config:
+        insecure_skip_verify: true
+      fail_if_body_not_matches_regexp: ["{{ vault_blackbox_exporter_http_pattern }}"]
   icmp:
     prober: icmp
     timeout: 1s

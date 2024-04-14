@@ -5,3 +5,5 @@
   tasks:
     - include_role:
         name: "{{ lookup('env', 'ROLE_NAME') | default('blackbox_exporter', true) }}"
+      vars:
+        vault_blackbox_exporter_http_pattern: test

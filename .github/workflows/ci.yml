@@ -5,7 +5,7 @@ on:
       runKics:
         description: Run KICS scan
         type: boolean
-        default: false
+        default: true
         required: false
       runLint:
         description: Run Ansible Lint
@@ -28,13 +28,30 @@ on:
     branches: ["master", "main"]
 
 env:
-  KICS_SCAN_PATH: "./"
+  ROLES_PATH: "roles/"
 
 jobs:
+  init:
+    name: Initialize CI for ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Get roles list in json
+        id: roles-list
+        run: echo "roles-list=$(ls ${{ env.ROLES_PATH }} | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+        shell: bash
+
+    outputs:
+      roles-list: ${{ steps.roles-list.outputs.roles-list }}
+
   scan:
     name: Checkmarx KICS
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [init]
     if: |
       inputs.runKics == true ||
       github.event_name == 'push' ||
@@ -45,6 +62,9 @@ jobs:
       pull-requests: write
       security-events: write
       actions: read
+    strategy:
+      matrix:
+        roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
@@ -58,14 +78,14 @@ jobs:
       - name: Run KICS scan
         uses: checkmarx/kics-github-action@aacf8e81cd48e227259c937c215b352e02ad447a # v2.1.0
         with:
-          path: ${{ env.KICS_SCAN_PATH }}
+          path: "roles/${{ matrix.roles }}"
           fail_on: high
           output_formats: "json,sarif"
           exclude_paths: ".github/workflows/scorecard.yml"
         continue-on-error: true
 
       - name: Upload to code-scanning
-        uses: github/codeql-action/upload-sarif@d39d31e687223d841ef683f52467bd88e9b21c14 # v3.25.3
+        uses: github/codeql-action/upload-sarif@eb055d739abdc2e8de2e5f4ba1a8b246daa779aa # v3.26.0
         with:
           sarif_file: results.sarif
 
@@ -73,10 +93,14 @@ jobs:
     name: Ansible Lint
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    needs: [init]
     if: |
       inputs.runLint == true ||
       github.event_name == 'push' ||
       github.event_name == 'pull_request'
+    strategy:
+      matrix:
+        roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0d381219ddf674d61a7572ddd19d7941e271515c # v2.9.0
@@ -89,17 +113,22 @@ jobs:
 
       - name: Run Ansible Lint
         uses: unleftie/ansible-lint-action@f6c9ea06aebdd94a4a7e0414d630fdb6832b1083 # v1.1.0
+        with:
+          path: "roles/${{ matrix.roles }}"
 
   molecule:
     name: Ansible Molecule
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    needs: [init]
     if: |
       inputs.runMolecule == true ||
       github.event_name == 'push' ||
       github.event_name == 'pull_request'
     strategy:
+      fail-fast: false
       matrix:
+        roles: ${{ fromJson(needs.init.outputs.roles-list) }}
         distro:
           - debian12
 
@@ -117,8 +146,9 @@ jobs:
         uses: unleftie/ansible-molecule-action@e8cecf7f6dfab2293dd28df032318e6a698c60a3 # v1.7.0
         with:
           github_token: ${{ github.token }}
-          role_name: ${{ github.event.repository.name }}
+          role_name: ${{ matrix.roles }}
           distro: ${{ matrix.distro }}
+          working_directory: "roles/${{ matrix.roles }}"
 
   release:
     name: Publish Release
@@ -127,7 +157,7 @@ jobs:
       inputs.publishRelease == true ||
       github.event_name == 'push' ||
       github.event_name == 'pull_request'
-    needs: [scan]
+    needs: [scan, lint, molecule]
     permissions:
       packages: write
       contents: write

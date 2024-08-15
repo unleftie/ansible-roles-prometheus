@@ -10,7 +10,7 @@ argument_specs:
     options:
       node_exporter_version:
         description: "Node exporter package version. Also accepts latest as parameter."
-        default: "1.7.0"
+        default: "1.8.1"
       node_exporter_skip_install:
         description: "Node exporter installation tasks gets skipped when set to true."
         type: bool
@@ -26,6 +26,10 @@ argument_specs:
       node_exporter_checksums_url:
         description: "URL of the node exporter checksums file"
         default: "https://github.com/{{ _node_exporter_repo }}/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
+      node_exporter_web_disable_exporter_metrics:
+        description: "Exclude metrics about the exporter itself (promhttp_*, process_*, go_*)."
+        type: bool
+        default: false
       node_exporter_web_listen_address:
         description: "Address on which node exporter will listen"
         default: "0.0.0.0:9100"
@@ -81,3 +85,6 @@ argument_specs:
           - "I(Advanced)"
           - "Node exporter user"
         default: "node-exp"
+      node_exporter_archive_path:
+        description: 'Local path to stash the archive and its extraction'
+        default: "/tmp"

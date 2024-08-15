@@ -15,3 +15,6 @@ snmp_exporter_config_file: ""
 snmp_exporter_binary_install_dir: "/usr/local/bin"
 snmp_exporter_system_group: "snmp_exporter"
 snmp_exporter_system_user: "{{ snmp_exporter_system_group }}"
+
+# Local path to stash the archive and its extraction
+snmp_exporter_archive_path: /tmp

@@ -164,9 +164,15 @@ prometheus_static_targets_files:
   - files/targets/*.yml
   - files/targets/*.json
 
+prometheus_scrape_config_files:
+  - prometheus/targets/*.yml
+  - prometheus/targets/*.json
+
 prometheus_alert_rules: []
 
 prometheus_system_group: "prometheus"
 prometheus_system_user: "prometheus"
 
 prometheus_stop_timeout: "600s"
+
+prometheus_archive_path: "/tmp"

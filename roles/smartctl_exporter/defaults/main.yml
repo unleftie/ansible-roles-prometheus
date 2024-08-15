@@ -1,5 +1,5 @@
 ---
-smartctl_exporter_version: 0.11.0
+smartctl_exporter_version: 0.12.0
 smartctl_exporter_binary_local_dir: ""
 smartctl_exporter_binary_url: "https://github.com/{{ _smartctl_exporter_repo }}/releases/download/v{{ smartctl_exporter_version }}/\
                            smartctl_exporter-{{ smartctl_exporter_version }}.linux-{{ go_arch }}.tar.gz"
@@ -28,3 +28,6 @@ smartctl_exporter_log_format: "logfmt"
 smartctl_exporter_binary_install_dir: "/usr/local/bin"
 smartctl_exporter_system_group: "smartctl-exp"
 smartctl_exporter_system_user: "{{ smartctl_exporter_system_group }}"
+
+# Local path to stash the archive and its extraction
+smartctl_exporter_archive_path: /tmp

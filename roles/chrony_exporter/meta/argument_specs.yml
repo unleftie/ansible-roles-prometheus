@@ -10,7 +10,7 @@ argument_specs:
     options:
       chrony_exporter_version:
         description: "Chrony exporter package version. Also accepts latest as parameter."
-        default: "1.6.0"
+        default: "0.10.1"
       chrony_exporter_skip_install:
         description: "Chrony exporter installation tasks gets skipped when set to true."
         type: bool
@@ -73,3 +73,6 @@ argument_specs:
           - "I(Advanced)"
           - "Chrony exporter user"
         default: "chrony-exp"
+      chrony_exporter_archive_path:
+        description: 'Local path to stash the archive and its extraction'
+        default: "/tmp"

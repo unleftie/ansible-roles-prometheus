@@ -10,7 +10,7 @@ argument_specs:
     options:
       smartctl_exporter_version:
         description: "Smartctl exporter package version. Also accepts latest as parameter."
-        default: "0.11.0"
+        default: "0.12.0"
       smartctl_exporter_skip_install:
         description: "Smartctl exporter installation tasks gets skipped when set to true."
         type: bool
@@ -90,3 +90,6 @@ argument_specs:
           - "I(Advanced)"
           - "Smartctl exporter user"
         default: "smartctl-exp"
+      smartctl_exporter_archive_path:
+        description: 'Local path to stash the archive and its extraction'
+        default: "/tmp"

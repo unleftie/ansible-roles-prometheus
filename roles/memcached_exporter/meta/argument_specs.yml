@@ -10,7 +10,7 @@ argument_specs:
     options:
       memcached_exporter_version:
         description: "memcached_exporter package version. Also accepts latest as parameter."
-        default: "0.14.1"
+        default: "0.14.3"
       memcached_exporter_skip_install:
         description: "memcached_exporter installation tasks gets skipped when set to true."
         type: bool
@@ -55,6 +55,10 @@ argument_specs:
         description:
           - "The path to the memcached PID file for process monitoring"
         default: ""
+      memcached_exporter_memcached_address:
+        description:
+          - "The ip to the memcached server to monitor"
+        default: ""
       memcached_exporter_binary_install_dir:
         description:
           - "I(Advanced)"
@@ -70,3 +74,6 @@ argument_specs:
           - "I(Advanced)"
           - "memcached_exporter user"
         default: "memcached-exp"
+      memcached_exporter_archive_path:
+        description: 'Local path to stash the archive and its extraction'
+        default: "/tmp"

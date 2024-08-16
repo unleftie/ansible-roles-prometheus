@@ -142,7 +142,7 @@
     - ansible_version.full is version('2.4', '>=')
     - ansible_selinux.status == "enabled"
 
-- name: configure restart script
+- name: Configure restart script
   template:
     src: "restart.sh.j2"
     dest: "~/restart_monitoring.sh"
@@ -150,7 +150,7 @@
     group: "{{ prometheus_system_group }}"
     mode: "0740"
 
-- name: configure status script
+- name: Configure status script
   template:
     src: "status.sh.j2"
     dest: "~/check_monitoring_status.sh"

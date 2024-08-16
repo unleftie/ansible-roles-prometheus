@@ -64,6 +64,7 @@ jobs:
       security-events: write
       actions: read
     strategy:
+      fail-fast: false
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
@@ -100,6 +101,7 @@ jobs:
       github.event_name == 'push' ||
       github.event_name == 'pull_request'
     strategy:
+      fail-fast: false
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:

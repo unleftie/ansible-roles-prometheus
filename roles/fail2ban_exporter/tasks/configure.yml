@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/fail2ban_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart fail2ban_exporter
 
 - name: Allow fail2ban_exporter port in SELinux on RedHat OS family

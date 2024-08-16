@@ -50,7 +50,7 @@
       ansible.builtin.copy:
         src: "{{ smartctl_exporter_archive_path }}/smartctl_exporter-{{ smartctl_exporter_version }}.linux-{{ go_arch }}/smartctl_exporter"
         dest: "{{ smartctl_exporter_binary_install_dir }}/smartctl_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart smartctl_exporter
@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: "{{ smartctl_exporter_binary_local_dir }}/smartctl_exporter"
     dest: "{{ smartctl_exporter_binary_install_dir }}/smartctl_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

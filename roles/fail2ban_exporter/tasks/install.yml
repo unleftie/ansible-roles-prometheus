@@ -32,7 +32,7 @@
       ansible.builtin.copy:
         src: "{{ fail2ban_exporter_archive_path }}/fail2ban_exporter"
         dest: "{{ fail2ban_exporter_binary_install_dir }}/fail2ban_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart fail2ban_exporter
@@ -42,7 +42,7 @@
   ansible.builtin.copy:
     src: "{{ fail2ban_exporter_binary_local_dir }}/fail2ban_exporter"
     dest: "{{ fail2ban_exporter_binary_install_dir }}/fail2ban_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

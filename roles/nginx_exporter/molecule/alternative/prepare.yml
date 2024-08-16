@@ -9,7 +9,7 @@
         url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/\
                 nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ go_arch }}.tar.gz"
         dest: "/tmp/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ go_arch }}.tar.gz"
-        mode: 0644
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

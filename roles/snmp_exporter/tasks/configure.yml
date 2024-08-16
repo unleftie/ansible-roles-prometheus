@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/snmp_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
     - restart snmp_exporter
 
@@ -16,7 +16,7 @@
     validate_certs: false
     owner: "{{ snmp_exporter_system_user }}"
     group: "{{ snmp_exporter_system_group }}"
-    mode: 0640
+    mode: "0640"
   register: _download_config
   until: _download_config is success
   retries: 5
@@ -31,7 +31,7 @@
     dest: /etc/snmp_exporter/snmp.yml
     owner: "{{ snmp_exporter_system_user }}"
     group: "{{ snmp_exporter_system_group }}"
-    mode: 0640
+    mode: "0640"
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify:
     - restart snmp_exporter

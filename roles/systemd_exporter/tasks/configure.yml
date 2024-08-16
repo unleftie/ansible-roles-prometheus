@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/systemd_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart systemd_exporter
 
 - name: Create systemd_exporter config directory
@@ -22,7 +22,7 @@
     dest: /etc/systemd_exporter/config.yaml
     owner: "{{ systemd_exporter_system_user }}"
     group: "{{ systemd_exporter_system_group }}"
-    mode: 0640
+    mode: "0640"
   notify: restart systemd_exporter
 
 - name: Allow systemd_exporter port in SELinux on RedHat OS family

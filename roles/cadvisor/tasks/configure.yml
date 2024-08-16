@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/cadvisor.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart cadvisor
 
 - name: Allow cadvisor port in SELinux on RedHat OS family

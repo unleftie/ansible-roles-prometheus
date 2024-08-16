@@ -49,7 +49,7 @@
       ansible.builtin.copy:
         src: "{{ systemd_exporter_archive_path }}/systemd_exporter-{{ systemd_exporter_version }}.linux-{{ go_arch }}/systemd_exporter"
         dest: "{{ systemd_exporter_binary_install_dir }}/systemd_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart systemd_exporter
@@ -59,7 +59,7 @@
   ansible.builtin.copy:
     src: "{{ systemd_exporter_binary_local_dir }}/systemd_exporter"
     dest: "{{ systemd_exporter_binary_install_dir }}/systemd_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

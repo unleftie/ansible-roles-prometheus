@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/smokeping_prober.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart smokeping_prober
 
 - name: Create smokeping_prober config directory
@@ -22,7 +22,7 @@
     dest: "{{ smokeping_prober_config_dir }}/{{ smokeping_prober_config_file }}"
     owner: "{{ smokeping_prober_system_user }}"
     group: "{{ smokeping_prober_system_group }}"
-    mode: 0640
+    mode: "0640"
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify: restart smokeping_prober
 
@@ -37,7 +37,7 @@
         dest: "{{ smokeping_prober_config_dir }}/web_config.yaml"
         owner: "{{ smokeping_prober_system_user }}"
         group: "{{ smokeping_prober_system_group }}"
-        mode: 0640
+        mode: "0640"
       notify: restart smokeping_prober
 
 - name: Allow smokeping_prober port in SELinux on RedHat OS family

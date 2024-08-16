@@ -50,7 +50,7 @@
       ansible.builtin.copy:
         src: "{{ nginx_exporter_archive_path }}/nginx-prometheus-exporter"
         dest: "{{ nginx_exporter_binary_install_dir }}/nginx-prometheus-exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart nginx_exporter
@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: "{{ nginx_exporter_binary_local_dir }}/nginx-prometheus-exporter"
     dest: "{{ nginx_exporter_binary_install_dir }}/nginx-prometheus-exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

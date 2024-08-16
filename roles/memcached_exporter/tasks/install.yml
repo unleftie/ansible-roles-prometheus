@@ -50,7 +50,7 @@
       ansible.builtin.copy:
         src: "{{ memcached_exporter_archive_path }}/memcached_exporter-{{ memcached_exporter_version }}.linux-{{ go_arch }}/memcached_exporter"
         dest: "{{ memcached_exporter_binary_install_dir }}/memcached_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart memcached_exporter
@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: "{{ memcached_exporter_binary_local_dir }}/memcached_exporter"
     dest: "{{ memcached_exporter_binary_install_dir }}/memcached_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

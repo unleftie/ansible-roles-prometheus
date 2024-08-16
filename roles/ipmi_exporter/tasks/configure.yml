@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/ipmi_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart ipmi_exporter
 
 - name: Create ipmi_exporter config directory
@@ -22,7 +22,7 @@
     dest: /etc/ipmi_exporter/web_config.yaml
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart ipmi_exporter
 
 - name: Copy the ipmi_exporter config file
@@ -31,7 +31,7 @@
     dest: /etc/ipmi_exporter/config.yaml
     owner: root
     group: "{{ ipmi_exporter_system_group }}"
-    mode: 0640
+    mode: "0640"
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify:
     - restart ipmi_exporter

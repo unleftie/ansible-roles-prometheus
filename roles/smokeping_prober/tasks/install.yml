@@ -49,7 +49,7 @@
       ansible.builtin.copy:
         src: "{{ smokeping_archive_path }}/smokeping_prober-{{ smokeping_prober_version }}.linux-{{ go_arch }}/smokeping_prober"
         dest: "{{ smokeping_prober_binary_install_dir }}/smokeping_prober"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart smokeping_prober
@@ -59,7 +59,7 @@
   ansible.builtin.copy:
     src: "{{ smokeping_prober_binary_local_dir }}/smokeping_prober"
     dest: "{{ smokeping_prober_binary_install_dir }}/smokeping_prober"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

@@ -22,7 +22,7 @@
     state: directory
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Create prometheus configuration directories
   ansible.builtin.file:
@@ -30,7 +30,7 @@
     state: directory
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0770
+    mode: "0770"
   with_items:
     - "{{ prometheus_config_dir }}"
     - "{{ prometheus_config_dir }}/rules"
@@ -50,7 +50,7 @@
         url: "{{ prometheus_binary_url }}"
         dest: "{{ prometheus_archive_path }}/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}.tar.gz"
         checksum: "sha256:{{ __prometheus_checksum }}"
-        mode: 0644
+        mode: "0644"
       register: _download_archive
       until: _download_archive is succeeded
       retries: 5
@@ -72,7 +72,7 @@
       ansible.builtin.copy:
         src: "{{ prometheus_archive_path }}/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}/{{ item }}"
         dest: "{{ _prometheus_binary_install_dir }}/{{ item }}"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       with_items:
@@ -85,7 +85,7 @@
       ansible.builtin.copy:
         src: "{{ prometheus_archive_path }}/prometheus-{{ prometheus_version }}.linux-{{ go_arch }}/{{ item }}/"
         dest: "{{ prometheus_config_dir }}/{{ item }}/"
-        mode: 0640
+        mode: "0640"
         owner: "{{ prometheus_system_user }}"
         group: "{{ prometheus_system_group }}"
       with_items:
@@ -98,7 +98,7 @@
   ansible.builtin.copy:
     src: "{{ prometheus_binary_local_dir }}/{{ item }}"
     dest: "{{ _prometheus_binary_install_dir }}/{{ item }}"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   with_items:
@@ -116,7 +116,7 @@
     dest: /etc/systemd/system/prometheus.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
     - restart prometheus
 
@@ -148,7 +148,7 @@
     dest: "~/restart_monitoring.sh"
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0740
+    mode: "0740"
 
 - name: configure status script
   template:
@@ -156,4 +156,4 @@
     dest: "~/check_monitoring_status.sh"
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0740
+    mode: "0740"

@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/pushgateway.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart pushgateway
 
 - name: Create pushgateway config directory
@@ -22,7 +22,7 @@
     dest: /etc/pushgateway/web_config.yml
     owner: "{{ pushgateway_system_user }}"
     group: "{{ pushgateway_system_group }}"
-    mode: 0640
+    mode: "0640"
   notify: restart pushgateway
 
 - name: Allow pushgateway port in SELinux on RedHat OS family

@@ -40,7 +40,7 @@
       ansible.builtin.copy:
         src: "{{ cadvisor_archive_path }}/cadvisor-v{{ cadvisor_version }}-linux-{{ go_arch }}"
         dest: "{{ cadvisor_binary_install_dir }}/cadvisor"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart cadvisor
@@ -50,7 +50,7 @@
   ansible.builtin.copy:
     src: "{{ cadvisor_binary_local_dir }}/cadvisor"
     dest: "{{ cadvisor_binary_install_dir }}/cadvisor"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

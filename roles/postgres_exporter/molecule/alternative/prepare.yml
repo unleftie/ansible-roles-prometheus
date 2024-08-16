@@ -11,7 +11,7 @@
           \ }}.linux-{{ go_arch }}.tar.gz"
         dest: "/tmp/postgres_exporter-{{ postgres_exporter_version }}.linux-{{ go_arch\
           \ }}.tar.gz"
-        mode: 0644
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

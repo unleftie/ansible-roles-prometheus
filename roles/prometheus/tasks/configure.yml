@@ -5,7 +5,7 @@
     dest: "{{ prometheus_config_dir }}/rules/ansible_managed.rules"
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
     validate: "{{ _prometheus_binary_install_dir }}/promtool check rules %s"
   when:
     - prometheus_alert_rules != []
@@ -19,7 +19,7 @@
     dest: "{{ prometheus_config_dir }}/rules/"
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
     validate: "{{ _prometheus_binary_install_dir }}/promtool check rules %s"
   with_fileglob: "{{ prometheus_alert_rules_files }}"
   when:
@@ -34,7 +34,7 @@
     force: true
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
     validate: "{{ _prometheus_binary_install_dir }}/promtool check config %s"
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify:
@@ -47,7 +47,7 @@
     force: true
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
 
 - name: Configure prometheus static targets
   ansible.builtin.copy:
@@ -57,7 +57,7 @@
     force: true
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
   with_dict: "{{ prometheus_targets }}"
   when: prometheus_targets != {}
 
@@ -68,7 +68,7 @@
     force: true
     owner: "{{ prometheus_system_user }}"
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
   with_fileglob: "{{ prometheus_static_targets_files }}"
 
 - name: Copy prometheus scrape config files
@@ -78,5 +78,5 @@
     force: true
     owner: root
     group: "{{ prometheus_system_group }}"
-    mode: 0640
+    mode: "0640"
   with_fileglob: "{{ prometheus_scrape_config_files }}"

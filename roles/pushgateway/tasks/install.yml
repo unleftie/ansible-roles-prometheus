@@ -50,7 +50,7 @@
       ansible.builtin.copy:
         src: "{{ pushgateway_archive_path }}/pushgateway-{{ pushgateway_version }}.linux-{{ go_arch }}/pushgateway"
         dest: "{{ pushgateway_binary_install_dir }}/pushgateway"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart pushgateway
@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: "{{ pushgateway_binary_local_dir }}/pushgateway"
     dest: "{{ pushgateway_binary_install_dir }}/pushgateway"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

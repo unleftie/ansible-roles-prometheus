@@ -50,7 +50,7 @@
       ansible.builtin.copy:
         src: "{{ mongodb_exporter_archive_path }}/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ go_arch }}/mongodb_exporter"
         dest: "{{ mongodb_exporter_binary_install_dir }}/mongodb_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart mongodb_exporter
@@ -60,7 +60,7 @@
   ansible.builtin.copy:
     src: "{{ mongodb_exporter_binary_local_dir }}/mongodb_exporter"
     dest: "{{ mongodb_exporter_binary_install_dir }}/mongodb_exporter"
-    mode: 0755
+    mode: "0755"
     owner: root
     group: root
   when:

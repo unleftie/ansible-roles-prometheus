@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/redis_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart redis_exporter
 
 - name: Create redis_exporter config directory
@@ -22,7 +22,7 @@
     content: "{{ redis_exporter_passwords | to_json(indent=2, sort_keys=True) }}"
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart redis_exporter
   when: redis_exporter_passwords | length > 0
 

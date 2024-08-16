@@ -9,7 +9,7 @@
         url: "https://github.com/percona/mongodb_exporter/releases/download/v{{ mongodb_exporter_version }}/\
               mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ go_arch }}.tar.gz"
         dest: "/tmp/mongodb_exporter-{{ mongodb_exporter_version }}.linux-{{ go_arch }}.tar.gz"
-        mode: 0644
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

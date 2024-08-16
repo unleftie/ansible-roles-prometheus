@@ -9,7 +9,7 @@
         url: "https://gitlab.com/hectorjsmith/fail2ban-prometheus-exporter/-/releases/v{{ fail2ban_exporter_version }}/downloads/\
               fail2ban_exporter_{{ fail2ban_exporter_version }}_linux_{{ go_arch }}.tar.gz"
         dest: "/tmp/fail2ban_exporter_{{ fail2ban_exporter_version }}_linux_{{ go_arch }}.tar.gz"
-        mode: 0644
+        mode: "0644"
       register: _download_binary
       until: _download_binary is succeeded
       retries: 5

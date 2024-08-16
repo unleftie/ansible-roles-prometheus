@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/nginx_exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart nginx_exporter
 
 - name: Create nginx_exporter config directory
@@ -22,7 +22,7 @@
     dest: /etc/nginx_exporter/web_config.yaml
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify: restart nginx_exporter
 
 - name: Allow nginx_exporter port in SELinux on RedHat OS family

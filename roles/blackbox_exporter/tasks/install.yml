@@ -47,7 +47,7 @@
       ansible.builtin.copy:
         src: "{{ blackbox_exporter_archive_path }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-{{ go_arch }}/blackbox_exporter"
         dest: "{{ blackbox_exporter_binary_install_dir }}/blackbox_exporter"
-        mode: 0755
+        mode: "0755"
         owner: root
         group: root
       notify: restart blackbox_exporter

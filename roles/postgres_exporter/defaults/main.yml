@@ -10,9 +10,9 @@ postgres_exporter_skip_install: false
 postgres_exporter_web_listen_address: "0.0.0.0:9187"
 postgres_exporter_web_telemetry_path: "/metrics"
 
-postgres_exporter_config_file: "postgres_exporter.yml"
+postgres_exporter_config_file: "postgres_exporter1.yml"
 
-postgres_exporter_name: "postgresql:///postgres?host=/var/run/postgresql"
+postgres_exporter_name: "postgresql:///postgres?host=127.0.0.1&port=5432"
 postgres_exporter_uri: ""
 postgres_exporter_username: ""
 postgres_exporter_password: ""

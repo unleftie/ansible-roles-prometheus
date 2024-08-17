@@ -1,5 +1,5 @@
 ---
-mysqld_exporter_version: "latest"
+mysqld_exporter_version: "0.15.1"
 mysqld_exporter_binary_local_dir: ""
 mysqld_exporter_binary_url:
   "https://github.com/{{ _mysqld_exporter_repo }}/releases/download/v{{ mysqld_exporter_version }}/\
@@ -33,8 +33,8 @@ mysqld_exporter_disabled_collectors: []
 # Internal variables.
 mysqld_exporter_binary_install_dir: "/usr/local/bin"
 mysqld_exporter_config_dir: "/etc/mysqld_exporter"
-mysqld_exporter_system_group: "mysqld-exp"
-mysqld_exporter_system_user: "{{ mysqld_exporter_system_group }}"
+mysqld_exporter_system_group: "prometheus"
+mysqld_exporter_system_user: "mysqld-exp"
 
 # Local path to stash the archive and its extraction
-mysqld_exporter_archive_path: /tmp
+mysqld_exporter_archive_path: "/tmp"

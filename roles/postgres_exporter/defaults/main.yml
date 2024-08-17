@@ -1,5 +1,5 @@
 ---
-postgres_exporter_version: 0.15.0
+postgres_exporter_version: "0.15.0"
 postgres_exporter_binary_local_dir: ""
 postgres_exporter_binary_url:
   "https://github.com/{{ _postgres_exporter_repo }}/releases/download/v{{ postgres_exporter_version }}/\
@@ -30,8 +30,8 @@ postgres_exporter_disabled_collectors: []
 # Internal variables.
 postgres_exporter_binary_install_dir: "/usr/local/bin"
 postgres_exporter_config_dir: "/etc/postgres_exporter"
-postgres_exporter_system_group: "postgres-exp"
-postgres_exporter_system_user: "{{ postgres_exporter_system_group }}"
+postgres_exporter_system_group: "prometheus"
+postgres_exporter_system_user: "postgres-exp"
 
 # Local path to stash the archive and its extraction
-postgres_exporter_archive_path: /tmp
+postgres_exporter_archive_path: "/tmp"

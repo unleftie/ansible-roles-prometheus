@@ -1,10 +1,12 @@
 ---
-nginx_exporter_version: 1.2.0
+nginx_exporter_version: "1.2.0"
 nginx_exporter_binary_local_dir: ""
-nginx_exporter_binary_url: "https://github.com/{{ _nginx_exporter_repo }}/releases/download/v{{ nginx_exporter_version }}/\
-                          nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ go_arch }}.tar.gz"
-nginx_exporter_checksums_url: "https://github.com/{{ _nginx_exporter_repo }}/releases/download/v{{ nginx_exporter_version }}/\
-                          nginx-prometheus-exporter_{{ nginx_exporter_version }}_checksums.txt"
+nginx_exporter_binary_url:
+  "https://github.com/{{ _nginx_exporter_repo }}/releases/download/v{{ nginx_exporter_version }}/\
+  nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ go_arch }}.tar.gz"
+nginx_exporter_checksums_url:
+  "https://github.com/{{ _nginx_exporter_repo }}/releases/download/v{{ nginx_exporter_version }}/\
+  nginx-prometheus-exporter_{{ nginx_exporter_version }}_checksums.txt"
 nginx_exporter_skip_install: false
 nginx_exporter_plus: false
 nginx_exporter_scrape_uri: "http://127.0.0.1/stub_status"
@@ -21,8 +23,8 @@ nginx_exporter_log_level: "info"
 nginx_exporter_log_format: "logfmt"
 
 nginx_exporter_binary_install_dir: "/usr/local/bin"
-nginx_exporter_system_group: "nginx-exp"
-nginx_exporter_system_user: "{{ nginx_exporter_system_group }}"
+nginx_exporter_system_group: "prometheus"
+nginx_exporter_system_user: "nginx-exp"
 
 # Local path to stash the archive and its extraction
-nginx_exporter_archive_path: /tmp
+nginx_exporter_archive_path: "/tmp"

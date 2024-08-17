@@ -1,5 +1,5 @@
 ---
-snmp_exporter_version: "latest"
+snmp_exporter_version: "0.26.0"
 snmp_exporter_binary_local_dir: ""
 snmp_exporter_binary_url:
   "https://github.com/{{ _snmp_exporter_repo }}/releases/download/v{{ snmp_exporter_version }}/\
@@ -13,8 +13,8 @@ snmp_exporter_log_level: info
 snmp_exporter_config_file: ""
 
 snmp_exporter_binary_install_dir: "/usr/local/bin"
-snmp_exporter_system_group: "snmp_exporter"
-snmp_exporter_system_user: "{{ snmp_exporter_system_group }}"
+snmp_exporter_system_group: "prometheus"
+snmp_exporter_system_user: "snmp_exporter"
 
 # Local path to stash the archive and its extraction
-snmp_exporter_archive_path: /tmp
+snmp_exporter_archive_path: "/tmp"

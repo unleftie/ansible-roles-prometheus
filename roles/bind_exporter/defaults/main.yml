@@ -23,5 +23,5 @@ bind_exporter_basic_auth_users: {}
 # Internal variables.
 bind_exporter_binary_install_dir: "/usr/local/bin"
 bind_exporter_config_dir: "/etc/bind_exporter"
-bind_exporter_system_group: "bind-exp"
-bind_exporter_system_user: "{{ bind_exporter_system_group }}"
+bind_exporter_system_group: "prometheus"
+bind_exporter_system_user: "bind-exp"

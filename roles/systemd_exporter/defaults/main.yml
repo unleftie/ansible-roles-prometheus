@@ -1,5 +1,5 @@
 ---
-systemd_exporter_version: "latest"
+systemd_exporter_version: "0.6.0"
 systemd_exporter_binary_local_dir: ""
 systemd_exporter_binary_url:
   "https://github.com/{{ _systemd_exporter_repo }}/releases/download/v{{ systemd_exporter_version }}/\
@@ -18,10 +18,10 @@ systemd_exporter_unit_include: ""
 systemd_exporter_unit_exclude: ""
 
 systemd_exporter_binary_install_dir: "/usr/local/bin"
-systemd_exporter_system_group: "systemd-exporter"
-systemd_exporter_system_user: "{{ systemd_exporter_system_group }}"
+systemd_exporter_system_group: "prometheus"
+systemd_exporter_system_user: "systemd-exporter"
 
 systemd_exporter_log_level: info
 
 # Local path to stash the archive and its extraction
-systemd_exporter_archive_path: /tmp
+systemd_exporter_archive_path: "/tmp"

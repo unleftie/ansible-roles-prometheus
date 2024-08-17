@@ -7,8 +7,8 @@ prometheus_binary_url:
 prometheus_checksums_url: "https://github.com/{{ _prometheus_repo }}/releases/download/v{{ prometheus_version }}/sha256sums.txt"
 prometheus_skip_install: false
 
-prometheus_config_dir: /etc/prometheus
-prometheus_db_dir: /var/lib/prometheus
+prometheus_config_dir: "/etc/prometheus"
+prometheus_db_dir: "/var/lib/prometheus"
 prometheus_read_only_dirs: []
 
 prometheus_web_port: 9090
@@ -138,21 +138,11 @@ prometheus_scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
-
-  # - job_name: "blackbox_ssh"
-  #   metrics_path: /prometheus/probe
-  #   params:
-  #     module: [ssh]
-  #   file_sd_configs:
-  #     - files:
-  #         - "{{ prometheus_config_dir }}/file_sd/blackbox_ssh.yml"
-  #   relabel_configs:
-  #     - source_labels: [__address__]
-  #       target_label: __param_target
-  #     - source_labels: [__param_target]
-  #       target_label: instance
-  #     - target_label: __address__
-  #       replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
+  - job_name: "mysqld_exporter"
+    metrics_path: /metrics
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/mysqld_exporter.yml"
 
 # Alternative config file name, searched in ansible templates path.
 prometheus_config_file: "prometheus.yml.j2"
@@ -164,9 +154,7 @@ prometheus_static_targets_files:
   - files/targets/*.yml
   - files/targets/*.json
 
-prometheus_scrape_config_files:
-  - prometheus/targets/*.yml
-  - prometheus/targets/*.json
+prometheus_scrape_config_files: []
 
 prometheus_alert_rules: []
 

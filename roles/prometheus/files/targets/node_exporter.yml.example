@@ -1,0 +1,5 @@
+- targets:
+    - "{{ node_exporter_web_listen_address | default('127.0.0.1:9100', true) }}"
+  labels:
+    service: "{{ ansible_hostname }}"
+    env: prod

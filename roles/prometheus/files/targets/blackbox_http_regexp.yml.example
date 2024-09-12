@@ -3,3 +3,4 @@
   labels:
     service: bing
     env: prod
+    job: blackbox_http_regexp

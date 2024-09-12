@@ -3,3 +3,4 @@
   labels:
     service: "{{ ansible_hostname }}"
     env: prod
+    job: node_exporter

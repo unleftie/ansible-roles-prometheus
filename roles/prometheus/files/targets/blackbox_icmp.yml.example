@@ -3,3 +3,4 @@
   labels:
     service: cloudflare
     env: prod
+    job: blackbox_icmp

@@ -6,6 +6,7 @@
     daemon_reload: true
     name: alertmanager
     state: restarted
+    enabled: true
   register: alertmanager_restarted
 
 - name: Reload alertmanager

@@ -21,6 +21,7 @@ Type=simple
 PIDFile=/run/alertmanager.pid
 {% else %}
 PIDFile=/var/run/alertmanager.pid
+{% endif %}
 User={{ alertmanager_system_user }}
 Group={{ alertmanager_system_group }}
 ExecReload=/bin/kill -HUP $MAINPID

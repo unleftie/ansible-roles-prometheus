@@ -1,9 +1,8 @@
 ---
-prometheus_version: "2.54.1"
-prometheus_binary_local_dir: ""
+prometheus_version: 2.54.1
 prometheus_binary_url:
   "https://github.com/{{ _prometheus_repo }}/releases/download/v{{ prometheus_version }}/\
-  prometheus-{{ prometheus_version }}.linux-{{ go_arch }}.tar.gz"
+  prometheus-{{ prometheus_version }}.{{ ansible_system | lower }}-{{ _prometheus_go_ansible_arch }}.tar.gz"
 prometheus_checksums_url: "https://github.com/{{ _prometheus_repo }}/releases/download/v{{ prometheus_version }}/sha256sums.txt"
 
 prometheus_binary_install_dir: /usr/local/bin
@@ -11,8 +10,7 @@ prometheus_config_dir: /etc/prometheus
 prometheus_db_dir: /var/lib/prometheus
 prometheus_read_only_dirs: []
 
-prometheus_web_port: 9090
-prometheus_web_listen_address: "127.0.0.1:{{ prometheus_web_port }}"
+prometheus_web_listen_address: "127.0.0.1:9090"
 prometheus_web_external_url: "/prometheus"
 prometheus_metrics_path: "/{{ (prometheus_web_external_url + '/metrics') | regex_replace('^(.*://)?(.*?)/') }}"
 # See https://github.com/prometheus/exporter-toolkit/blob/master/docs/web-configuration.md
@@ -162,8 +160,6 @@ prometheus_system_group: "prometheus"
 prometheus_system_user: "prometheus"
 
 prometheus_stop_timeout: "600s"
-
-prometheus_archive_path: "/tmp"
 
 # Local path to stash the archive and its extraction
 prometheus_local_cache_path: "/tmp/prometheus-{{ ansible_system | lower }}-{{ _prometheus_go_ansible_arch }}/{{ prometheus_version }}"

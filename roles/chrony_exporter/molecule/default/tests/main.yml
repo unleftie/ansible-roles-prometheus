@@ -25,10 +25,3 @@ command:
   chrony_exporter --version:
     exit-status: 0
     stdout: ["platform", "tags"]
-file:
-  /etc/chrony_exporter/web_config.yaml:
-    exists: true
-    mode: "0640"
-    owner: {{ chrony_exporter_system_user }}
-    group: {{ chrony_exporter_system_group }}
-    filetype: file

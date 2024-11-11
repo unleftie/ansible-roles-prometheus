@@ -3,13 +3,13 @@ service:
     enabled: true
     running: true
 user:
-  {{ blackbox_exporter_user }}:
+  {{ blackbox_exporter_system_user }}:
     exists: true
     groups:
-      - {{ blackbox_exporter_group }}
+      - {{ blackbox_exporter_system_group }}
     shell: /usr/sbin/nologin
 group:
-  {{ blackbox_exporter_group }}:
+  {{ blackbox_exporter_system_group }}:
     exists: true
 http:
   http://{{ blackbox_exporter_web_listen_address }}:
@@ -32,6 +32,6 @@ file:
   {{ blackbox_exporter_config_dir }}/blackbox_exporter.yml:
     exists: true
     mode: "0640"
-    owner: {{ blackbox_exporter_user }}
-    group: {{ blackbox_exporter_group }}
+    owner: {{ blackbox_exporter_system_user }}
+    group: {{ blackbox_exporter_system_group }}
     filetype: file

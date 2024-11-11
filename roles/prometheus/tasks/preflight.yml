@@ -1,29 +1,4 @@
 ---
-- name: Assert usage of systemd as an init system
-  ansible.builtin.assert:
-    that: ansible_service_mgr == 'systemd'
-    msg: "This module only works with systemd"
-
-- name: Install package fact dependencies
-  become: true
-  ansible.builtin.package:
-    name: "{{ _pkg_fact_req }}"
-    state: present
-  register: _progress_status
-  until: _progress_status is succeeded
-  delay: 5
-  retries: 5
-  when: (_pkg_fact_req)
-  vars:
-    _pkg_fact_req: "{% if (ansible_pkg_mgr == 'apt') %}\
-      {{ ('python-apt' if ansible_python_version is version('3', '<') else 'python3-apt') }}
-      {% else %}\
-      {% endif %}"
-
-- name: Gather package facts
-  ansible.builtin.package_facts:
-  when: "not 'packages' in ansible_facts"
-
 - name: Common preflight
   ansible.builtin.include_role:
     name: prometheus.prometheus._common
@@ -105,7 +80,7 @@
 - name: Discover latest version
   ansible.builtin.set_fact:
     prometheus_version:
-      "{{ (lookup('url', 'https://api.github.com/repos/prometheus/prometheus/releases/latest', headers=_github_api_headers,
+      "{{ (lookup('url', 'https://api.github.com/repos/{{ _prometheus_repo}}/releases/latest', headers=_github_api_headers,
       split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
   run_once: true
   until: prometheus_version is version('0.0.0', '>=')

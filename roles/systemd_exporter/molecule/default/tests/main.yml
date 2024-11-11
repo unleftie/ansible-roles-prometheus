@@ -21,10 +21,3 @@ http:
 command:
   systemd_exporter --version:
     exit-status: 0
-file:
-  /etc/systemd_exporter/config.yaml:
-    exists: true
-    mode: "0640"
-    owner: {{ systemd_exporter_system_user }}
-    group: {{ systemd_exporter_system_group }}
-    filetype: file

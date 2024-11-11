@@ -5,7 +5,6 @@ alertmanager_binary_url:
   "https://github.com/{{ _alertmanager_repo }}/releases/download/v{{ alertmanager_version }}/\
   alertmanager-{{ alertmanager_version }}.linux-{{ go_arch }}.tar.gz"
 alertmanager_checksums_url: "https://github.com/{{ _alertmanager_repo }}/releases/download/v{{ alertmanager_version }}/sha256sums.txt"
-alertmanager_skip_install: false
 
 alertmanager_system_group: "prometheus"
 alertmanager_system_user: "alertmanager"
@@ -143,5 +142,9 @@ alertmanager_amtool_config_alertmanager_url: "{{ alertmanager_web_external_url }
 # Extended output of `amtool` commands, use '' for less verbosity
 alertmanager_amtool_config_output: "extended"
 
+alertmanager_binary_install_dir: "/usr/local/bin"
+
 # Local path to stash the archive and its extraction
 alertmanager_archive_path: "/tmp"
+
+alertmanager_local_cache_path: "/tmp/alertmanager-{{ ansible_system | lower }}-{{ _alertmanager_go_ansible_arch }}/{{ alertmanager_version }}"

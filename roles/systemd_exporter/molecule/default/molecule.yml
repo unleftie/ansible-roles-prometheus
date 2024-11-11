@@ -15,23 +15,7 @@ platforms:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
 provisioner:
-  name: ansible
-  config_options:
-    defaults:
-      display_skipped_hosts: false
-  lint:
-    name: ansible-lint
-scenario:
-  test_sequence:
-    - cleanup
-    - destroy
-    - syntax
-    - create
-    - prepare
-    - converge
-    - verify
-    - converge
-    - verify
-    - destroy
-verifier:
-  name: ansible
+  inventory:
+    group_vars:
+      all:
+        systemd_exporter_web_listen_address: "127.0.0.1:9558"

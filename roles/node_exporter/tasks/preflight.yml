@@ -1,20 +1,4 @@
 ---
-- name: Assert usage of systemd as an init system
-  ansible.builtin.assert:
-    that: ansible_service_mgr == 'systemd'
-    msg: "This role only works with systemd"
-
-- name: Install package fact dependencies
-  become: true
-  ansible.builtin.package:
-    name: "{{ _pkg_fact_req }}"
-    state: present
-  register: _progress_status
-  until: _progress_status is succeeded
-  delay: 5
-  retries: 5
-  when: (_pkg_fact_req)
-
 - name: Common preflight
   ansible.builtin.include_role:
     name: prometheus.prometheus._common
@@ -67,7 +51,7 @@
 - name: Discover latest version
   ansible.builtin.set_fact:
     node_exporter_version:
-      "{{ (lookup('url', 'https://api.github.com/repos/prometheus/node_exporter/releases/latest', headers=_github_api_headers,
+      "{{ (lookup('url', 'https://api.github.com/repos/{{ _node_exporter_repo }}/releases/latest', headers=_github_api_headers,
       split_lines=False) | from_json).get('tag_name') | replace('v', '') }}"
   run_once: true
   until: node_exporter_version is version('0.0.0', '>=')

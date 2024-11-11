@@ -19,9 +19,9 @@
   ansible.builtin.template:
     src: probes.yml.j2
     dest: "{{ smokeping_prober_config_dir }}/{{ smokeping_prober_config_file }}"
-    owner: "{{ smokeping_prober_system_user }}"
-    group: "{{ smokeping_prober_system_group }}"
-    mode: "0640"
+    owner: root
+    group: root
+    mode: 0644
   no_log: "{{ false if (lookup('env', 'CI')) or (lookup('env', 'MOLECULE_PROVISIONER_NAME')) else true }}"
   notify: restart smokeping_prober
   become: true

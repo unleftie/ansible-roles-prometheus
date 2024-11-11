@@ -109,7 +109,7 @@ jobs:
     if: |
       github.event.workflow_run.conclusion != 'failure'
     strategy:
-      fail-fast: true
+      fail-fast: false # FIXME: should be true
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
     steps:
@@ -135,7 +135,7 @@ jobs:
     if: |
       github.event.workflow_run.conclusion != 'failure'
     strategy:
-      fail-fast: true
+      fail-fast: false # FIXME: should be true
       matrix:
         roles: ${{ fromJson(needs.init.outputs.roles-list) }}
         distro:

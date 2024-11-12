@@ -52,7 +52,7 @@ jobs:
 
       - name: Get roles list in json
         id: roles-list
-        run: echo "roles-list=$(ls ${{ env.ROLES_PATH }} | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
+        run: echo "roles-list=$(ls ${{ env.ROLES_PATH }} | grep -v '^_common$' | jq -R -s -c 'split("\n")[:-1]')" >> $GITHUB_OUTPUT
         shell: bash
 
     outputs:

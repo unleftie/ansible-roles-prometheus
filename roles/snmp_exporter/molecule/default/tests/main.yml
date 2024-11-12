@@ -21,10 +21,3 @@ http:
 command:
   snmp_exporter --version:
     exit-status: 0
-file:
-  /etc/snmp_exporter/snmp.yml:
-    exists: true
-    mode: "0640"
-    owner: {{ snmp_exporter_system_user }}
-    group: {{ snmp_exporter_system_group }}
-    filetype: file

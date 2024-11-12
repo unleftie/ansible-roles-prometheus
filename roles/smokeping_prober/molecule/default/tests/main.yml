@@ -12,19 +12,11 @@ group:
   {{ smokeping_prober_system_group }}:
     exists: true
 http:
-  http://{{ smokeping_prober_web_listen_address }}{{ smokeping_prober_web_telemetry_path }}:
+  http://{{ smokeping_prober_web_listen_address }}:
     status: 200
     allow-insecure: false
     no-follow-redirects: false
     timeout: 5000
-    body: [smokeping_receive_errors_total]
 command:
   smokeping_prober --version:
     exit-status: 0
-file:
-  {{ smokeping_prober_config_dir }}/{{ smokeping_prober_config_file }}:
-    exists: true
-    mode: "0640"
-    owner: {{ smokeping_prober_system_user }}
-    group: {{ smokeping_prober_system_group }}
-    filetype: file

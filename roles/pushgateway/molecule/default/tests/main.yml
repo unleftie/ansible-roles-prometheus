@@ -21,10 +21,3 @@ http:
 command:
   pushgateway --version:
     exit-status: 0
-file:
-  /etc/pushgateway/web_config.yml:
-    exists: true
-    mode: "0640"
-    owner: {{ pushgateway_system_user }}
-    group: {{ pushgateway_system_group }}
-    filetype: file

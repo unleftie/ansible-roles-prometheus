@@ -40,6 +40,16 @@
   tags:
     - fail2ban_exporter_configure
 
+- name: Firewall
+  ansible.builtin.include_tasks:
+    file: firewall.yml
+    apply:
+      become: true
+      tags:
+        - fail2ban_exporter_configure
+  tags:
+    - fail2ban_exporter_configure
+
 - name: Ensure fail2ban_exporter is enabled on boot
   become: true
   ansible.builtin.systemd:

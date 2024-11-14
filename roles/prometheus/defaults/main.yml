@@ -80,6 +80,11 @@ prometheus_scrape_configs:
     file_sd_configs:
       - files:
           - "{{ prometheus_config_dir }}/file_sd/node_exporter.yml"
+  - job_name: "fail2ban_exporter"
+    metrics_path: /metrics
+    file_sd_configs:
+      - files:
+          - "{{ prometheus_config_dir }}/file_sd/fail2ban_exporter.yml"
   - job_name: "blackbox_http"
     metrics_path: /probe
     params:

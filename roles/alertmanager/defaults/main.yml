@@ -68,6 +68,15 @@ alertmanager_receivers:
         chat_id: "{{ vault_alertmanager_telegram_chat_id }}"
         message: '{% raw %}{{ template "telegram.default" .}}{% endraw %}'
         parse_mode: HTML
+  - name: telegram_default_no_resolved
+    telegram_configs:
+      - send_resolved: false
+        http_config:
+          follow_redirects: true
+        bot_token: "{{ vault_alertmanager_telegram_bot_token }}"
+        chat_id: "{{ vault_alertmanager_telegram_chat_id }}"
+        message: '{% raw %}{{ template "telegram.default" .}}{% endraw %}'
+        parse_mode: HTML
   - name: telegram_home
     telegram_configs:
       - send_resolved: true
@@ -110,6 +119,17 @@ alertmanager_route:
     - receiver: telegram_home
       match:
         env: telegram_home
+      group_by:
+        - job
+        - alertname
+      group_interval: 15s
+      group_wait: 15s
+      repeat_interval: 24h
+    - receiver: telegram_default_no_resolved
+      match:
+        env: prod
+        severity: error
+        no_resolved: true
       group_by:
         - job
         - alertname

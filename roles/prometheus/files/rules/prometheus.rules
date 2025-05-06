@@ -30,7 +30,7 @@ groups:
 
       - alert: PrometheusTargetsEmpty
         expr: "prometheus_sd_discovered_targets == 0"
-        for: 0m
+        for: 5m
         labels:
           severity: error
           env: prod

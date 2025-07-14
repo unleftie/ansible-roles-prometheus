@@ -99,20 +99,6 @@ prometheus_scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
-  - job_name: "blackbox_http_regexp"
-    metrics_path: /probe
-    params:
-      module: [http_regexp]
-    file_sd_configs:
-      - files:
-          - "{{ prometheus_config_dir }}/file_sd/blackbox_http_regexp.yml"
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
   - job_name: "blackbox_icmp"
     metrics_path: /probe
     params:
@@ -141,11 +127,6 @@ prometheus_scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: "{{ blackbox_exporter_web_listen_address | default('127.0.0.1:9115', true) }}"
-  - job_name: "mysqld_exporter"
-    metrics_path: /metrics
-    file_sd_configs:
-      - files:
-          - "{{ prometheus_config_dir }}/file_sd/mysqld_exporter.yml"
 
 # Alternative config file name, searched in ansible templates path.
 prometheus_config_file: "prometheus.yml.j2"

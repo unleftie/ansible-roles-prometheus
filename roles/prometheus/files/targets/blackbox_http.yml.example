@@ -1,3 +1,5 @@
+# file should be renamed to *.yml
+
 - targets:
     - https://www.bing.com
   labels:

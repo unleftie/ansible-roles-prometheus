@@ -1,3 +1,4 @@
+# https://samber.github.io/awesome-prometheus-alerts/rules#host-and-hardware
 groups:
   - name: node_exporter
     rules:
@@ -112,18 +113,108 @@ groups:
 
       - alert: InstanceClockSkewDetected
         annotations:
-          message: "Clock on {{ $labels.instance }} is out of sync by more than 10m. Ensure NTP is configured correctly on this host."
-          summary: "Clock skew detected"
-        expr: "(\n  node_timex_offset_seconds > 0.05\nand\n  deriv(node_timex_offset_seconds[10m]) >= 0\n)\nor\n(\n  node_timex_offset_seconds < -0.05\nand\n  deriv(node_timex_offset_seconds[10m]) <= 0\n)\n"
+          description: "Clock skew detected. Clock is out of sync. Ensure NTP is configured correctly on this host.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          summary: Host clock skew (service {{ $labels.service }})
+        expr: ((node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0))
         for: 10m
         labels:
           severity: error
 
       - alert: InstanceClockNotSynchronising
         annotations:
-          message: "Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured on this host."
-          summary: "Clock not synchronising"
-        expr: "min_over_time(node_timex_sync_status[10m]) == 0\n"
+          description: "Clock on {{ $labels.instance }} is not synchronising. Ensure NTP is configured on this host."
+          summary: Host clock not synchronising (service {{ $labels.service }})
+        expr: (min_over_time(node_timex_sync_status[1m]) == 0 and node_timex_maxerror_seconds >= 16)
         for: 20m
         labels:
           severity: error
+
+      - alert: HostOutOfInodes
+        expr: (node_filesystem_files_free / node_filesystem_files < .10 and ON (instance, device, mountpoint) node_filesystem_readonly == 0)
+        for: 2m
+        labels:
+          severity: error
+        annotations:
+          summary: Host out of inodes (service {{ $labels.service }})
+          description: "Disk is almost running out of available inodes (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostInodesMayFillIn24Hours
+        expr: predict_linear(node_filesystem_files_free{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"}[1h], 86400) <= 0 and node_filesystem_files_free > 0
+        for: 2m
+        labels:
+          severity: warn
+        annotations:
+          summary: Host inodes may fill in 24 hours (service {{ $labels.service }})
+          description: "Filesystem will likely run out of inodes within the next 24 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostFilesystemDeviceError
+        expr: node_filesystem_device_error{fstype!~"^(fuse.*|tmpfs|cifs|nfs)"} == 1
+        for: 2m
+        labels:
+          severity: warn
+        annotations:
+          summary: Host filesystem device error (service {{ $labels.service }})
+          description: "Error stat-ing the {{ $labels.mountpoint }} filesystem\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostUnusualDiskReadLatency
+        expr: (rate(node_disk_read_time_seconds_total[1m]) / rate(node_disk_reads_completed_total[1m]) > 0.1 and rate(node_disk_reads_completed_total[1m]) > 0)
+        for: 2m
+        labels:
+          severity: warn
+        annotations:
+          summary: Host unusual disk read latency (service {{ $labels.service }})
+          description: "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostUnusualDiskWriteLatency
+        expr: (rate(node_disk_write_time_seconds_total[1m]) / rate(node_disk_writes_completed_total[1m]) > 0.1 and rate(node_disk_writes_completed_total[1m]) > 0)
+        for: 2m
+        labels:
+          severity: warn
+        annotations:
+          summary: Host unusual disk write latency (service {{ $labels.service }})
+          description: "Disk latency is growing (write operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostCpuHighIowait
+        expr: avg by (instance) (rate(node_cpu_seconds_total{mode="iowait"}[5m])) > .10
+        for: 0m
+        labels:
+          severity: error
+        annotations:
+          summary: Host CPU high iowait (service {{ $labels.service }})
+          description: "CPU iowait > 10%. Your CPU is idling waiting for storage to respond.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostUnusualDiskIo
+        expr: rate(node_disk_io_time_seconds_total[5m]) > 0.8
+        for: 5m
+        labels:
+          severity: error
+        annotations:
+          summary: Host unusual disk IO (service {{ $labels.service }})
+          description: "Disk usage >80%. Check storage for issues or increase IOPS capabilities. Check storage for issues.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostSystemdServiceCrashed
+        expr: (node_systemd_unit_state{state="failed"} == 1)
+        for: 0m
+        labels:
+          severity: error
+        annotations:
+          summary: Host systemd service crashed (service {{ $labels.service }})
+          description: "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostKernelVersionDeviations
+        expr: changes(node_uname_info[1h]) > 0
+        for: 0m
+        labels:
+          severity: warn
+        annotations:
+          summary: Host kernel version deviations (service {{ $labels.service }})
+          description: "Kernel version for {{ $labels.instance }} has changed.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      - alert: HostOomKillDetected
+        expr: (increase(node_vmstat_oom_kill[1m]) > 0)
+        for: 0m
+        labels:
+          severity: error
+        annotations:
+          summary: Host OOM kill detected (service {{ $labels.service }})
+          description: "OOM kill detected\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

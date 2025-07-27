@@ -8,7 +8,7 @@ groups:
         labels:
           severity: error
         annotations:
-          summary: "Blackbox probe HTTP failure (service {{ $labels.service }})"
+          summary: "Blackbox probe HTTP failure"
           description: "HTTP status code is not 200-399\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: SslCertificateWillExpireSoon
@@ -17,7 +17,7 @@ groups:
         labels:
           severity: error
         annotations:
-          summary: "Blackbox SSL certificate will expire soon (service {{ $labels.service }})"
+          summary: "Blackbox SSL certificate will expire soon"
           description: "SSL certificate expires in less than 5 days\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: SslCertificateExpired
@@ -26,7 +26,7 @@ groups:
         labels:
           severity: error
         annotations:
-          summary: "Blackbox SSL certificate expired (service {{ $labels.service }})"
+          summary: "Blackbox SSL certificate expired"
           description: "SSL certificate has expired already\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: SslCertificateChanged
@@ -36,7 +36,7 @@ groups:
           severity: error
         annotations:
           summary: "SSL certificate metadata value changed"
-          description: "The metric value 'probe_ssl_last_chain_info' has changed in the 5m"
+          description: "The metric value 'probe_ssl_last_chain_info' has changed in the 5m\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: SlowHttp
         expr: "avg_over_time(probe_http_duration_seconds[1m]) > 1"
@@ -44,5 +44,5 @@ groups:
         labels:
           severity: error
         annotations:
-          summary: "Blackbox probe slow HTTP (service {{ $labels.service }})"
+          summary: "Blackbox probe slow HTTP"
           description: "HTTP request took more than 1s\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

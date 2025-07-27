@@ -17,5 +17,5 @@ groups:
         labels:
           severity: error
         annotations:
-          summary: "Blackbox probe slow ping (service {{ $labels.service }})"
+          summary: "Blackbox probe slow ping"
           description: "Ping took more than 1s\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

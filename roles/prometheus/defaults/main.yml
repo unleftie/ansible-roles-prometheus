@@ -138,6 +138,8 @@ prometheus_config_file: "prometheus.yml.j2"
 
 prometheus_alert_rules_files:
   - files/rules/*.rules
+  - files/rules/*.yml
+  - files/rules/*.yaml
 
 prometheus_static_targets_files:
   - files/targets/*.yml

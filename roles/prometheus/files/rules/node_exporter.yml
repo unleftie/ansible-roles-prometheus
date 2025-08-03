@@ -151,7 +151,7 @@ groups:
         expr: node_filesystem_device_error{fstype!~"^(fuse.*|tmpfs|cifs|nfs)",mountpoint!="/boot/efi"} == 1
         for: 2m
         labels:
-          severity: warn
+          severity: error
         annotations:
           summary: Host filesystem device error
           description: "Error stat-ing the {{ $labels.mountpoint }} filesystem\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

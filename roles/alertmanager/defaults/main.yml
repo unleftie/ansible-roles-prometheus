@@ -126,8 +126,8 @@ alertmanager_route:
       group_wait: 15s
       repeat_interval: 24h
     - receiver: telegram_default_no_resolved
-      match:
-        env: prod
+      match_re:
+        env: prod|dev
         severity: error
         no_resolved: true
       group_by:
@@ -137,8 +137,8 @@ alertmanager_route:
       group_wait: 15s
       repeat_interval: 24h
     - receiver: telegram_default
-      match:
-        env: prod
+      match_re:
+        env: prod|dev
         severity: error
       group_by:
         - job

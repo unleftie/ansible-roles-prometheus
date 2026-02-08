@@ -1,8 +1,0 @@
-# file should be renamed to *.yml
-
-- targets:
-    - 1.1.1.1
-  labels:
-    service: cloudflare
-    env: prod
-    job: blackbox_icmp

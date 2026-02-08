@@ -20,10 +20,6 @@ on:
   push:
     paths-ignore: ["**.md", "LICENSE", ".github/dependabot.yml"]
     branches: ["master", "main"]
-  pull_request:
-    paths-ignore: ["**.md", "LICENSE", ".github/dependabot.yml"]
-    branches: ["master", "main"]
-    types: [opened, reopened]
 
 env:
   ROLES_PATH: "roles/"
@@ -62,7 +58,7 @@ jobs:
     needs: [init]
     if: |
       inputs.runKics == true ||
-      github.event_name == 'push'
+      github.event_name == 'workflow_dispatch'
     permissions:
       contents: read
       issues: write
@@ -101,8 +97,7 @@ jobs:
     needs: [init]
     if: |
       inputs.runLint == true ||
-      github.event_name == 'push' ||
-      github.event_name == 'pull_request'
+      github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: true
       matrix:
@@ -129,8 +124,7 @@ jobs:
     needs: [init]
     if: |
       inputs.runMolecule == true ||
-      github.event_name == 'push' ||
-      github.event_name == 'pull_request'
+      github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: true
       matrix:
@@ -160,7 +154,7 @@ jobs:
     name: Publish Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [lint, molecule]
+    needs: [init]
     if: github.event_name == 'push'
     permissions:
       contents: write

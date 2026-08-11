@@ -6,9 +6,12 @@ service:
     enabled: true
     running: true
 process:
-  nginx-prometheus-exporter:
+  nginx-prometheu:
     running: true
+command:
+  nginx-prometheus-exporter --version:
+    exit-status: 0
 port:
-  tcp:9113:
+  tcp6:9113:
     listening: true
 {% endif %}

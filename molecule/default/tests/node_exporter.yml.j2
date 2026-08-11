@@ -11,5 +11,7 @@ process:
 command:
   node_exporter --version:
     exit-status: 0
-    stdout: [node_exporter]
+port:
+  tcp6:9100:
+    listening: true
 {% endif %}

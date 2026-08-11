@@ -6,9 +6,12 @@ service:
     enabled: true
     running: true
 process:
-  fail2ban_exporter:
+  fail2ban_export:
     running: true
+command:
+  fail2ban_exporter --version:
+    exit-status: 0
 port:
-  tcp:9191:
+  tcp6:9191:
     listening: true
 {% endif %}

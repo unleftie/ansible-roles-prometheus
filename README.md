@@ -3,10 +3,8 @@
 [![CI](https://github.com/unleftie/ansible-roles-prometheus/actions/workflows/ci.yml/badge.svg)](https://github.com/unleftie/ansible-roles-prometheus/actions/workflows/ci.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/unleftie/ansible-roles-prometheus/badge)](https://securityscorecards.dev/viewer/?uri=github.com/unleftie/ansible-roles-prometheus)
 
-Thin wrapper role that applies the `node_exporter`, `fail2ban_exporter`, and `nginx_exporter` roles from the upstream
-[prometheus.prometheus](https://galaxy.ansible.com/ui/repo/published/prometheus/prometheus/) collection. Each exporter can be toggled
-independently via `node_exporter_role_enabled` / `fail2ban_exporter_role_enabled` / `nginx_exporter_role_enabled` (default `true`) in
-[defaults/main.yml](defaults/main.yml). Override variables live in [vars/](vars/), one file per exporter.
+Thin wrapper role that applies the [prometheus](https://github.com/prometheus-community/ansible) roles from the upstream
+[prometheus.prometheus](https://galaxy.ansible.com/ui/repo/published/prometheus/prometheus/) collection. Override variables live in `vars/` directory, one file per role.
 
 ## Compatibility
 

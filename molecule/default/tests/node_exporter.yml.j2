@@ -1,0 +1,15 @@
+---
+# starting point ported from the old node_exporter goss suite - extend as needed
+{% if node_exporter_role_enabled | default(true) %}
+service:
+  node_exporter.service:
+    enabled: true
+    running: true
+process:
+  node_exporter:
+    running: true
+command:
+  node_exporter --version:
+    exit-status: 0
+    stdout: [node_exporter]
+{% endif %}

@@ -1,0 +1,20 @@
+---
+- name: Include role vars
+  ansible.builtin.include_vars:
+    dir: "{{ role_path }}/vars"
+    extensions: ["yml", "yaml"]
+
+- name: Apply node_exporter
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.node_exporter
+  when: node_exporter_role_enabled | default(true)
+
+- name: Apply fail2ban_exporter
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.fail2ban_exporter
+  when: fail2ban_exporter_role_enabled | default(true)
+
+- name: Apply nginx_exporter
+  ansible.builtin.include_role:
+    name: prometheus.prometheus.nginx_exporter
+  when: nginx_exporter_role_enabled | default(true)

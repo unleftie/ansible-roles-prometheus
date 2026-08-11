@@ -1,0 +1,23 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: prometheus_exporters
+  author: unleftie
+  description: Wrapper role applying prometheus.prometheus node_exporter, fail2ban_exporter, and nginx_exporter
+  company: ""
+  license: "license (MIT)"
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - prometheus
+    - node_exporter
+    - fail2ban_exporter
+    - nginx_exporter
+    - monitoring

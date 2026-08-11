@@ -1,0 +1,14 @@
+---
+# port/process derived from fail2ban_exporter's service template and defaults - extend as needed
+{% if fail2ban_exporter_role_enabled | default(true) %}
+service:
+  fail2ban_exporter.service:
+    enabled: true
+    running: true
+process:
+  fail2ban_exporter:
+    running: true
+port:
+  tcp:9191:
+    listening: true
+{% endif %}

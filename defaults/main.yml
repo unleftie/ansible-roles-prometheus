@@ -1,0 +1,5 @@
+---
+# set to false to skip applying (and verifying) the given exporter role
+node_exporter_role_enabled: true
+fail2ban_exporter_role_enabled: true
+nginx_exporter_role_enabled: true

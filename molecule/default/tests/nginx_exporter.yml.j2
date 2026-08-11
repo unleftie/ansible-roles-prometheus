@@ -1,0 +1,14 @@
+---
+# port/process derived from nginx_exporter's service template and defaults - extend as needed
+{% if nginx_exporter_role_enabled | default(true) %}
+service:
+  nginx_exporter.service:
+    enabled: true
+    running: true
+process:
+  nginx-prometheus-exporter:
+    running: true
+port:
+  tcp:9113:
+    listening: true
+{% endif %}

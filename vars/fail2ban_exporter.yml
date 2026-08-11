@@ -1,0 +1,3 @@
+---
+# overrides for prometheus.prometheus.fail2ban_exporter, see:
+# https://prometheus-community.github.io/ansible/branch/main/fail2ban_exporter_role.html

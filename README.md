@@ -1,13 +1,16 @@
-# Ansible Roles for Prometheus setup
+# Ansible Roles for Grafana setup
 
-[![CI](https://github.com/unleftie/ansible-roles-prometheus/actions/workflows/ci.yml/badge.svg)](https://github.com/unleftie/ansible-roles-prometheus/actions/workflows/ci.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/unleftie/ansible-roles-prometheus/badge)](https://securityscorecards.dev/viewer/?uri=github.com/unleftie/ansible-roles-prometheus)
+[![CI](https://github.com/unleftie/ansible-roles-grafana/actions/workflows/ci.yml/badge.svg)](https://github.com/unleftie/ansible-roles-grafana/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/unleftie/ansible-roles-grafana/badge)](https://securityscorecards.dev/viewer/?uri=github.com/unleftie/ansible-roles-grafana)
+
+Thin wrapper role that applies [`grafana.grafana`](https://github.com/grafana/grafana-ansible-collection) roles from the upstream
+[grafana.grafana](https://galaxy.ansible.com/ui/repo/published/grafana/grafana/) collection. Override variables live in [vars/main.yml](vars/main.yml)
 
 ## Compatibility
 
 | Platform | Version |
 | -------- | ------- |
-| debian   | 12      |
+| ubuntu   | 26.04   |
 
 ## Dependencies
 
@@ -18,17 +21,20 @@
 ## Local Testing
 
 ```sh
-git clone https://github.com/unleftie/ansible-roles-prometheus.git
-cd ansible-roles-prometheus/roles/prometheus # or any other role
+git clone https://github.com/unleftie/ansible-roles-grafana.git
+cd ansible-roles-grafana
+ansible-galaxy install -r requirements.yml
 molecule test
 ```
 
 ## Installation
 
-> Upgradability notice: When upgrading from old version of this role, be aware that some files may be lost.
+```sh
+ansible-galaxy install -r requirements.yml
+```
 
 Example [playbook](main.yml)
 
 ## 📝 License
 
-This project is licensed under the [Apache License](LICENSE).
+This project is licensed under the [MIT](LICENSE).
